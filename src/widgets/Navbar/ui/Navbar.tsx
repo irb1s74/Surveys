@@ -32,7 +32,9 @@ export const Navbar: FC<NavbarProps> = ({window}) => {
                         </Typography>
                     </Stack>
                     <Stack>
-                        <Avatar/>
+                        <IconButton>
+                            <Avatar/>
+                        </IconButton>
                     </Stack>
                 </Toolbar>
             </AppBar>
