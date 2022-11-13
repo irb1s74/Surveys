@@ -1,7 +1,6 @@
 import {FC} from 'react';
 import {
     AppBar,
-    Avatar,
     IconButton,
     Slide,
     Stack,
@@ -10,6 +9,8 @@ import {
     useScrollTrigger,
 } from "@mui/material";
 import {FcDocument} from "react-icons/fc";
+import {NavbarActions} from "./NavbarActions";
+import {Link} from "react-router-dom";
 
 interface NavbarProps {
     window?: () => Window;
@@ -24,18 +25,16 @@ export const Navbar: FC<NavbarProps> = ({window}) => {
             <AppBar color="inherit">
                 <Toolbar>
                     <Stack sx={{flexGrow: 1}} direction='row' alignItems='center'>
-                        <IconButton>
-                            <FcDocument size={34}/>
-                        </IconButton>
+                        <Link to='/'>
+                            <IconButton>
+                                <FcDocument size={34}/>
+                            </IconButton>
+                        </Link>
                         <Typography variant='h4'>
                             Формы
                         </Typography>
                     </Stack>
-                    <Stack>
-                        <IconButton>
-                            <Avatar/>
-                        </IconButton>
-                    </Stack>
+                    <NavbarActions/>
                 </Toolbar>
             </AppBar>
         </Slide>

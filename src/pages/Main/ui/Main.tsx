@@ -1,6 +1,16 @@
 import {FC} from 'react';
-import {Container, IconButton, Grid, Paper, Stack} from "@mui/material";
-import {IoAddCircle} from "react-icons/io5";
+import {Container, Grid} from "@mui/material";
+import {CreateForm} from "widgets/CreateForm";
+import {Form} from "widgets/Form";
+import {IForm} from "entities/Form";
+
+
+const mockForms: IForm[] = [
+    {
+        id: 0,
+        title: "Опрос 1"
+    }
+]
 
 interface MainProps {
 }
@@ -8,16 +18,15 @@ interface MainProps {
 const Main: FC<MainProps> = () => {
     return (
         <Container maxWidth='xl'>
-            <Grid container spacing={2}>
+            <Grid container spacing={3}>
                 <Grid item xl={2}>
-                    <Paper sx={{height: "220px"}}>
-                        <Stack sx={{height: "100%"}} justifyContent="center" alignItems="center">
-                            <IconButton  size="large" color='primary'>
-                                <IoAddCircle size={44}/>
-                            </IconButton>
-                        </Stack>
-                    </Paper>
+                    <CreateForm/>
                 </Grid>
+                {mockForms.map((form) => (
+                    <Grid key={form.id} item xl={2}>
+                        <Form data={form}/>
+                    </Grid>
+                ))}
             </Grid>
         </Container>
     );

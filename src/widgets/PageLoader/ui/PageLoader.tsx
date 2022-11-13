@@ -8,7 +8,7 @@ interface PageLoaderProps {
 
 export const PageLoader: FC<PageLoaderProps> = () => {
     return (
-        <Stack sx={{mt: "64px", height: "calc(100vh - 64px)"}} justifyContent='center' alignItems='center'>
+        <Stack sx={{height: "100%"}} justifyContent='center' alignItems='center'>
             <Loader/>
         </Stack>
     );
