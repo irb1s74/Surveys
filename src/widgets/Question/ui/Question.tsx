@@ -1,5 +1,6 @@
 import {FC, useState} from 'react';
 import {
+    Button,
     Card,
     CardActions,
     CardContent,
@@ -9,7 +10,7 @@ import {
     Stack,
     Switch,
 } from "@mui/material";
-import {IoEllipsisVerticalSharp} from "react-icons/io5";
+import {IoTrash} from "react-icons/io5";
 import {Variant} from "shared/ui/Variant/Variant";
 import {QuestionHeader} from "./QuestionHeader";
 
@@ -62,6 +63,7 @@ export const Question: FC<QuestionProps> = () => {
                             setValue={handleSetValue}
                         />
                     ))}
+                    <Button variant="text">Добавить</Button>
                 </Stack>
             </CardContent>
             <Divider/>
@@ -72,7 +74,7 @@ export const Question: FC<QuestionProps> = () => {
                 />
                 <Divider orientation="vertical" variant="middle" flexItem/>
                 <IconButton>
-                    <IoEllipsisVerticalSharp/>
+                    <IoTrash/>
                 </IconButton>
             </CardActions>
         </Card>

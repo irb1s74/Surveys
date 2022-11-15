@@ -9,6 +9,12 @@ export const theme = createTheme({
         ].join(','),
     },
     palette: {
+        primary: {
+            main: "#EC1C24"
+        },
+        secondary: {
+            main: "#323E49"
+        },
         background: {
             default: '#F1F3F4'
         }

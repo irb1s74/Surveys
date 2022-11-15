@@ -22,7 +22,7 @@ export const Navbar: FC<NavbarProps> = ({window}) => {
     });
     return (
         <Slide appear={false} direction="down" in={!trigger}>
-            <AppBar color="inherit">
+            <AppBar color="secondary">
                 <Toolbar>
                     <Stack sx={{flexGrow: 1}} direction='row' alignItems='center'>
                         <Link to='/'>
@@ -31,7 +31,7 @@ export const Navbar: FC<NavbarProps> = ({window}) => {
                             </IconButton>
                         </Link>
                         <Typography variant='h4'>
-                            Формы
+                            PARMA forms
                         </Typography>
                     </Stack>
                     <NavbarActions/>

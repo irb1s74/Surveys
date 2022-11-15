@@ -1,14 +1,15 @@
 import {SyntheticEvent, useState} from 'react';
 import {
     Card,
-    CardContent,
-    Container, Stack, Tab, Tabs,
-    TextField
+    Container,
+    Stack,
+    Tab,
+    Tabs,
 } from "@mui/material";
-import {Question} from "widgets/Question/ui/Question";
 import {IoImage, IoLogoYoutube, IoText} from "react-icons/io5";
 import {DialActions} from "widgets/DialActions";
-
+import {EditFormQuestions} from "./EditFormQuestions";
+import {EditFormAnswers} from "./EditFormAnswers";
 
 const EditForm = () => {
     const [tab, setTab] = useState('questions');
@@ -31,12 +32,11 @@ const EditForm = () => {
                         <Tab label="Ответы" value="answers"/>
                     </Tabs>
                 </Card>
-                <Card>
-                    <CardContent>
-                        <TextField fullWidth variant="standard" label="Название формы"/>
-                    </CardContent>
-                </Card>
-                <Question/>
+                {tab === "questions" ? (
+                    <EditFormQuestions/>
+                ) : (
+                    <EditFormAnswers/>
+                )}
             </Stack>
             <DialActions actions={actions}/>
         </Container>
