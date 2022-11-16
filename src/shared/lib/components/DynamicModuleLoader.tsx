@@ -20,7 +20,6 @@ export const DynamicModuleLoader = (props: DynamicModuleLoaderProps) => {
     const store = useStore() as ReduxStoreWithManager;
 
     useEffect(() => {
-        console.log(Object.entries(reducers))
         Object.entries(reducers).forEach(([reducerKey, reducer]: ReducerListEntry) => {
             store.reducerManager.add(reducerKey, reducer);
         })

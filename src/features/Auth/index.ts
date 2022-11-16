@@ -1,5 +1,7 @@
-import {RegForm} from "features/Auth/ui/RegForm/RegForm.async";
+import {RegSchema} from "./model/types/regSchema";
+import {RegForm} from "./ui/RegForm/RegForm.async";
 
 export {
-    RegForm
+    RegForm,
+    RegSchema
 }

@@ -1,14 +1,36 @@
-import {memo} from 'react';
+import {ChangeEvent, memo, useCallback} from 'react';
 import {DynamicModuleLoader, ReducersList} from "shared/lib/components/DynamicModuleLoader";
-import {authReducer} from "../../model/slice/authSlice";
-import {useDispatch} from "react-redux";
-import {Button, Card, CardActions, CardContent, CardHeader, Divider, Input, Stack, TextField} from "@mui/material";
+import {useDispatch, useSelector} from "react-redux";
+import {Button, Card, CardActions, CardContent, CardHeader, Divider, Stack, TextField, Typography} from "@mui/material";
+import {regActions, regReducer} from "../../model/slice/regSlice";
+import {getAuthEmail} from "features/Auth/model/selectors/getAuthEmail/getAuthEmail";
+import {getAuthPassword} from "features/Auth/model/selectors/getAuthPassword/getAuthPassword";
+import {getAuthFullName} from "features/Auth/model/selectors/getAuthFullName/getAuthFullName";
+import {getAuthError} from "features/Auth/model/selectors/getAuthError/getAuthError";
 
 const initialReducers: ReducersList = {
-    authForm: authReducer
+    regForm: regReducer
 }
+
 const RegForm = () => {
     const dispatch = useDispatch();
+
+    const email = useSelector(getAuthEmail);
+    const password = useSelector(getAuthPassword);
+    const full_name = useSelector(getAuthFullName);
+    const error = useSelector(getAuthError);
+
+    const onChangeEmail = useCallback((event: ChangeEvent<HTMLInputElement>) => {
+        dispatch(regActions.setEmail(event.target.value))
+    }, [dispatch])
+    const onChangeFullName = useCallback((event: ChangeEvent<HTMLInputElement>) => {
+        dispatch(regActions.setFullName(event.target.value))
+    }, [dispatch])
+
+    const onChangePassword = useCallback((event: ChangeEvent<HTMLInputElement>) => {
+        dispatch(regActions.setPassword(event.target.value))
+    }, [dispatch])
+
     return (
         <DynamicModuleLoader reducers={initialReducers}>
             <Card sx={{maxWidth: "420px", width: "420px"}}>
@@ -16,11 +38,17 @@ const RegForm = () => {
                 <Divider/>
                 <CardContent>
                     <Stack spacing={2}>
-                        <TextField fullWidth label="ФИО"/>
-                        <TextField fullWidth label="ФИО"/>
-                        <TextField fullWidth label="ФИО"/>
+                        <TextField fullWidth label="Email" type="email" value={email} onChange={onChangeEmail}/>
+                        <TextField fullWidth label="ФИО" value={full_name} onChange={onChangeFullName}/>
+                        <TextField fullWidth label="Пароль" type="password" value={password}
+                            onChange={onChangePassword}/>
                     </Stack>
                 </CardContent>
+                {error && (
+                    <Typography color="error">
+                        {error}
+                    </Typography>
+                )}
                 <Divider/>
                 <CardActions>
                     <Button sx={{ml: "auto"}} variant="contained">Отправить</Button>
