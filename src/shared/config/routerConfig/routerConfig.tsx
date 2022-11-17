@@ -5,36 +5,51 @@ import {NotFoundPage} from "pages/NotFoundPage";
 import {Auth} from "pages/Auth";
 
 
-
 export enum AppRoutes {
-    MAIN = 'MAIN',
     NOT_FOUND = 'NOT_FOUND',
-    EDIT_FORM = 'EDIT_FORM',
     AUTH = 'AUTH'
 }
 
 export const RoutePath: Record<AppRoutes, string> = {
-    [AppRoutes.MAIN]: '/',
-    [AppRoutes.EDIT_FORM]: '/edit',
-    [AppRoutes.AUTH]: '/auth',
+    [AppRoutes.AUTH]: '/',
     [AppRoutes.NOT_FOUND]: '*',
 };
 
 export const routeConfig: Record<AppRoutes, RouteProps> = {
-    [AppRoutes.MAIN]: {
-        path: RoutePath.MAIN,
-        element: <Main/>,
-    },
     [AppRoutes.NOT_FOUND]: {
         path: RoutePath.NOT_FOUND,
         element: <NotFoundPage/>,
-    },
-    [AppRoutes.EDIT_FORM]: {
-        path: RoutePath.EDIT_FORM,
-        element: <EditForm/>,
     },
     [AppRoutes.AUTH]: {
         path: RoutePath.AUTH,
         element: <Auth/>,
     },
 };
+
+
+export enum AppRoutesPrivate {
+    MAIN = 'MAIN',
+    EDIT_FORM = 'EDIT_FORM',
+    NOT_FOUND = 'NOT_FOUND'
+}
+
+export const RoutePathPrivate: Record<AppRoutesPrivate, string> = {
+    [AppRoutesPrivate.MAIN]: '/',
+    [AppRoutesPrivate.EDIT_FORM]: '/edit',
+    [AppRoutesPrivate.NOT_FOUND]: '*',
+};
+
+export const routeConfigPrivate: Record<AppRoutesPrivate, RouteProps> = {
+    [AppRoutesPrivate.MAIN]: {
+        path: RoutePathPrivate.MAIN,
+        element: <Main/>,
+    },
+    [AppRoutesPrivate.NOT_FOUND]: {
+        path: RoutePathPrivate.NOT_FOUND,
+        element: <NotFoundPage/>,
+    },
+    [AppRoutesPrivate.EDIT_FORM]: {
+        path: RoutePathPrivate.EDIT_FORM,
+        element: <EditForm/>,
+    },
+}

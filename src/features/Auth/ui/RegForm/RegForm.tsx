@@ -3,10 +3,11 @@ import {DynamicModuleLoader, ReducersList} from "shared/lib/components/DynamicMo
 import {useDispatch, useSelector} from "react-redux";
 import {Button, Card, CardActions, CardContent, CardHeader, Divider, Stack, TextField, Typography} from "@mui/material";
 import {regActions, regReducer} from "../../model/slice/regSlice";
-import {getAuthEmail} from "features/Auth/model/selectors/getAuthEmail/getAuthEmail";
-import {getAuthPassword} from "features/Auth/model/selectors/getAuthPassword/getAuthPassword";
-import {getAuthFullName} from "features/Auth/model/selectors/getAuthFullName/getAuthFullName";
-import {getAuthError} from "features/Auth/model/selectors/getAuthError/getAuthError";
+import {getAuthEmail} from "../../model/selectors/getAuthEmail/getAuthEmail";
+import {getAuthPassword} from "../../model/selectors/getAuthPassword/getAuthPassword";
+import {getAuthFullName} from "../../model/selectors/getAuthFullName/getAuthFullName";
+import {getAuthError} from "../../model/selectors/getAuthError/getAuthError";
+import {regByEmail} from "features/Auth/model/services/regByEmail";
 
 const initialReducers: ReducersList = {
     regForm: regReducer
@@ -14,7 +15,6 @@ const initialReducers: ReducersList = {
 
 const RegForm = () => {
     const dispatch = useDispatch();
-
     const email = useSelector(getAuthEmail);
     const password = useSelector(getAuthPassword);
     const full_name = useSelector(getAuthFullName);
@@ -22,14 +22,19 @@ const RegForm = () => {
 
     const onChangeEmail = useCallback((event: ChangeEvent<HTMLInputElement>) => {
         dispatch(regActions.setEmail(event.target.value))
-    }, [dispatch])
+    }, [dispatch]);
+
     const onChangeFullName = useCallback((event: ChangeEvent<HTMLInputElement>) => {
         dispatch(regActions.setFullName(event.target.value))
-    }, [dispatch])
+    }, [dispatch]);
 
     const onChangePassword = useCallback((event: ChangeEvent<HTMLInputElement>) => {
         dispatch(regActions.setPassword(event.target.value))
-    }, [dispatch])
+    }, [dispatch]);
+
+    const onAuthClick = useCallback(() => {
+        dispatch(regByEmail({email, full_name, password}));
+    }, [dispatch, full_name, email, password]);
 
     return (
         <DynamicModuleLoader reducers={initialReducers}>
@@ -43,15 +48,15 @@ const RegForm = () => {
                         <TextField fullWidth label="Пароль" type="password" value={password}
                             onChange={onChangePassword}/>
                     </Stack>
+                    {error && (
+                        <Typography color="error">
+                            {error}
+                        </Typography>
+                    )}
                 </CardContent>
-                {error && (
-                    <Typography color="error">
-                        {error}
-                    </Typography>
-                )}
                 <Divider/>
                 <CardActions>
-                    <Button sx={{ml: "auto"}} variant="contained">Отправить</Button>
+                    <Button onClick={onAuthClick} sx={{ml: "auto"}} variant="contained">Отправить</Button>
                 </CardActions>
             </Card>
         </DynamicModuleLoader>
