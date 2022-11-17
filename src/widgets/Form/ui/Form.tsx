@@ -26,6 +26,7 @@ export const Form: FC<FormProps> = (props) => {
         <Card sx={{
             maxHeight: "220px",
             height: "220px",
+            width: "228px",
             display: "flex",
             flexDirection: "column",
         }}>

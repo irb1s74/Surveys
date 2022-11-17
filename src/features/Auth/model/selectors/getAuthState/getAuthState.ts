@@ -1,3 +1,3 @@
 import {StateSchema} from "app/providers/StoreProvider/config/StateSchema";
 
-export const getAuthState = (state: StateSchema) => state?.regForm
+export const getAuthState = (state: StateSchema) => state?.authForm

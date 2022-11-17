@@ -12,6 +12,7 @@ export const CreateForm: FC<CreateFormProps> = ({onCreate}) => {
         <Card sx={{
             maxHeight: "220px",
             height: "220px",
+            width: "228px",
             display: "flex",
         }}>
             <CardActionArea color="primary" sx={{flexGrow: 1, color: theme.palette.primary.main}}>

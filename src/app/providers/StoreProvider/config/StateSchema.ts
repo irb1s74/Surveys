@@ -1,10 +1,10 @@
 import {AnyAction, CombinedState, EnhancedStore, Reducer, ReducersMapObject} from "@reduxjs/toolkit";
-import {RegSchema} from "features/Auth";
+import {AuthSchema} from "features/Auth";
 import {UserSchema} from "entities/User";
 
 export interface StateSchema {
     user: UserSchema
-    regForm?: RegSchema
+    authForm?: AuthSchema
 }
 
 export type StateSchemaKey = keyof StateSchema;

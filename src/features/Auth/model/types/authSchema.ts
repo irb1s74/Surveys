@@ -1,4 +1,4 @@
-export interface RegSchema {
+export interface AuthSchema {
     isLoading: boolean;
     full_name: string;
     email:  string;

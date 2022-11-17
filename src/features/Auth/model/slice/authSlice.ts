@@ -1,9 +1,10 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit'
-import {RegSchema} from "../types/regSchema";
+import {AuthSchema} from "../types/authSchema";
 import {regByEmail} from "../../model/services/regByEmail";
+import {loginByEmail} from "../../model/services/loginByEmail";
 
 
-const initialState: RegSchema = {
+const initialState: AuthSchema = {
     isLoading: false,
     full_name: '',
     email: '',
@@ -11,7 +12,7 @@ const initialState: RegSchema = {
     error: undefined,
 }
 
-export const regSlice = createSlice({
+export const authSlice = createSlice({
     name: 'auth',
     initialState,
     reducers: {
@@ -39,8 +40,20 @@ export const regSlice = createSlice({
                 state.error = action.payload;
                 state.isLoading = false;
             })
+            .addCase(loginByEmail.pending, (state, action) => {
+                state.error = undefined;
+                state.isLoading = true;
+            })
+            .addCase(loginByEmail.fulfilled, (state, action) => {
+                state.error = undefined;
+                state.isLoading = false;
+            })
+            .addCase(loginByEmail.rejected, (state, action) => {
+                state.error = action.payload;
+                state.isLoading = false;
+            })
     }
 })
 
-export const {actions: regActions} = regSlice;
-export const {reducer: regReducer} = regSlice;
+export const {actions: authActions} = authSlice;
+export const {reducer: authReducer} = authSlice;

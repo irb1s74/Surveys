@@ -1,14 +1,14 @@
 import {Suspense} from 'react';
 import {Stack} from "@mui/material";
 import {Loader} from "shared/ui/Loader/Loader";
-import RegForm from "features/Auth/ui/RegForm/RegForm";
+import AuthForm from "features/Auth/ui/AuthForm/AuthForm";
 
 
 const Auth = () => {
     return (
         <Stack sx={{height: "100%"}} justifyContent="center" alignItems="center">
             <Suspense fallback={<Loader/>}>
-                <RegForm/>
+                <AuthForm/>
             </Suspense>
         </Stack>
     );
