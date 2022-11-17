@@ -6,6 +6,7 @@ import {getAuthEmail} from "../../model/selectors/getAuthEmail/getAuthEmail";
 import {getAuthPassword} from "../../model/selectors/getAuthPassword/getAuthPassword";
 import {getAuthFullName} from "../../model/selectors/getAuthFullName/getAuthFullName";
 import {getAuthError} from "../../model/selectors/getAuthError/getAuthError";
+import {getAuthIsLoading} from "../../model/selectors/getAuthIsLoading/getAuthIsLoading";
 import {regByEmail} from "features/Auth/model/services/regByEmail";
 import {authActions, authReducer} from "features/Auth/model/slice/authSlice";
 
@@ -23,6 +24,7 @@ const RegForm: FC<RegFormProps> = ({setTypeAuth}) => {
     const password = useSelector(getAuthPassword);
     const full_name = useSelector(getAuthFullName);
     const error = useSelector(getAuthError);
+    const isLoading = useSelector(getAuthIsLoading);
 
     const onChangeEmail = useCallback((event: ChangeEvent<HTMLInputElement>) => {
         dispatch(authActions.setEmail(event.target.value))
@@ -64,7 +66,8 @@ const RegForm: FC<RegFormProps> = ({setTypeAuth}) => {
                 </CardContent>
                 <Divider/>
                 <CardActions>
-                    <Button onClick={onAuthClick} fullWidth variant="contained">Создать аккаунт</Button>
+                    <Button onClick={onAuthClick} disabled={isLoading} fullWidth variant="contained">Создать
+                        аккаунт</Button>
                 </CardActions>
             </Card>
         </DynamicModuleLoader>

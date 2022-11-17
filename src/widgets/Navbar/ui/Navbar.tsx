@@ -11,12 +11,15 @@ import {
 import {FcDocument} from "react-icons/fc";
 import {NavbarActions} from "./NavbarActions";
 import {Link} from "react-router-dom";
+import {useSelector} from "react-redux";
+import {getUserAuthData} from "entities/User";
 
 interface NavbarProps {
     window?: () => Window;
 }
 
 export const Navbar: FC<NavbarProps> = ({window}) => {
+    const authData = useSelector(getUserAuthData);
     const trigger = useScrollTrigger({
         target: window ? window() : undefined,
     });
@@ -34,7 +37,9 @@ export const Navbar: FC<NavbarProps> = ({window}) => {
                             PARMA forms
                         </Typography>
                     </Stack>
-                    <NavbarActions/>
+                    {authData && (
+                        <NavbarActions authData={authData}/>
+                    )}
                 </Toolbar>
             </AppBar>
         </Slide>

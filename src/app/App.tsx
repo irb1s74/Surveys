@@ -1,14 +1,14 @@
-import {Suspense, useEffect} from 'react';
+import {Suspense, useLayoutEffect} from 'react';
 import {Navbar} from "widgets/Navbar";
 import {AppRouter} from "app/providers/router";
-import {userActions} from "entities/User";
 import {useDispatch} from "react-redux";
+import {authByToken} from "entities/User/model/service/authByToken";
 
 const App = () => {
     const dispatch = useDispatch();
 
-    useEffect(() => {
-        dispatch(userActions.initialAuthData())
+    useLayoutEffect(() => {
+        dispatch(authByToken())
     }, [dispatch])
     return (
         <Suspense fallback="">

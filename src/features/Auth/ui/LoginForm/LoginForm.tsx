@@ -4,7 +4,8 @@ import {Button, Card, CardActions, CardContent, CardHeader, Divider, Stack, Text
 import {getAuthEmail} from "../../model/selectors/getAuthEmail/getAuthEmail";
 import {getAuthPassword} from "../../model/selectors/getAuthPassword/getAuthPassword";
 import {getAuthError} from "../../model/selectors/getAuthError/getAuthError";
-import {loginByEmail} from "../..//model/services/loginByEmail";
+import {loginByEmail} from "../../model/services/loginByEmail";
+import {getAuthIsLoading} from "../../model/selectors/getAuthIsLoading/getAuthIsLoading";
 import {authActions, authReducer} from "../../model/slice/authSlice";
 import {DynamicModuleLoader, ReducersList} from "shared/lib/components/DynamicModuleLoader";
 
@@ -19,6 +20,7 @@ const LoginForm: FC<LoginFormProps> = ({setTypeAuth}) => {
     const dispatch = useDispatch();
     const email = useSelector(getAuthEmail);
     const password = useSelector(getAuthPassword);
+    const isLoading = useSelector(getAuthIsLoading);
     const error = useSelector(getAuthError);
 
     const onChangeEmail = useCallback((event: ChangeEvent<HTMLInputElement>) => {
@@ -56,7 +58,7 @@ const LoginForm: FC<LoginFormProps> = ({setTypeAuth}) => {
                 </CardContent>
                 <Divider/>
                 <CardActions>
-                    <Button onClick={onAuthClick} fullWidth variant="contained">Войти</Button>
+                    <Button onClick={onAuthClick} disabled={isLoading} fullWidth variant="contained">Войти</Button>
                 </CardActions>
             </Card>
         </DynamicModuleLoader>

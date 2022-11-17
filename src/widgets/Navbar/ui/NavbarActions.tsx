@@ -2,13 +2,15 @@ import {FC, useState, MouseEvent} from 'react';
 import {Avatar, IconButton, ListItemIcon, Menu, MenuItem, Stack} from "@mui/material";
 import {IoLogOut} from "react-icons/io5";
 import {useDispatch} from "react-redux";
-import {userActions} from "entities/User";
+import {User, userActions} from "entities/User";
 import {useNavigate} from "react-router-dom";
+import {getUrl} from "shared/lib/getUrl/getUrl";
 
 interface NavbarActionsProps {
+    authData: User
 }
 
-export const NavbarActions: FC<NavbarActionsProps> = () => {
+export const NavbarActions: FC<NavbarActionsProps> = ({authData}) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -27,7 +29,7 @@ export const NavbarActions: FC<NavbarActionsProps> = () => {
     return (
         <Stack>
             <IconButton onClick={handleClick}>
-                <Avatar/>
+                <Avatar alt="user avatar" src={authData.avatar && `${getUrl}avatars/${authData.avatar}`}/>
             </IconButton>
             <Menu
                 anchorEl={anchorEl}
