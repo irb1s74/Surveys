@@ -30,7 +30,7 @@ const initialReducers: ReducersList = {
 
 const AddFormForm: FC<AddFormFormProps> = ({onClose}) => {
     const title = useSelector(getAddFormTitle);
-    const isLoading  = useSelector(getAddFormIsLoading);
+    const isLoading = useSelector(getAddFormIsLoading);
     const error = useSelector(getAddFormError);
     const user = useSelector(getUserAuthData)
     const dispatch = useDispatch();
@@ -41,6 +41,7 @@ const AddFormForm: FC<AddFormFormProps> = ({onClose}) => {
 
     const onCreate = () => {
         dispatch(createForm({title, token: user.token}));
+        onClose();
     }
 
     return (
@@ -51,7 +52,7 @@ const AddFormForm: FC<AddFormFormProps> = ({onClose}) => {
                     <IconButton onClick={onClose}>
                         <IoClose/>
                     </IconButton>
-                    {error &&(
+                    {error && (
                         <Typography color="error">{error}</Typography>
                     )}
                 </Stack>

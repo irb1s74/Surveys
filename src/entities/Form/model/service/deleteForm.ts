@@ -1,17 +1,20 @@
-import {createAsyncThunk} from "@reduxjs/toolkit";
 import {Form} from "../types/Form";
-import axios from "axios";
+import {createAsyncThunk} from "@reduxjs/toolkit";
 import {getUrl} from "shared/lib/getUrl/getUrl";
 import {USER_LOCALSTORAGE_KEY} from "shared/const/localstorage";
+import axios from "axios";
+import {formActions} from "../slice/formSlice";
 
+interface deleteFormProps {
+    formId: number;
+}
 
-
-export const getForms = createAsyncThunk<Form[], undefined, { rejectValue: string }>(
-    "form/getForms",
-    async ({}, thunkAPI) => {
+export const deleteForm = createAsyncThunk<Form[], deleteFormProps, { rejectValue: string }>(
+    "form/delete",
+    async ({formId}, thunkAPI) => {
         try {
             const user = JSON.parse(localStorage.getItem(USER_LOCALSTORAGE_KEY));
-            const response = await axios.get("forms",
+            const response = await axios.delete(`forms/delete/${formId}`,
                 {
                     baseURL: getUrl,
                     headers: {
@@ -23,9 +26,8 @@ export const getForms = createAsyncThunk<Form[], undefined, { rejectValue: strin
             if (!response.data) {
                 throw new Error();
             }
-
-            return response.data
-        }catch (e) {
+            thunkAPI.dispatch(formActions.deleteForm(formId));
+        } catch (e) {
             return thunkAPI.rejectWithValue("Вы ввели неверный логин или пароль")
         }
     }

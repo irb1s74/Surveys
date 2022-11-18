@@ -1,16 +1,17 @@
-import {FC} from 'react';
+import {FC, MouseEvent, useState} from 'react';
 import {
     Card,
     CardActionArea,
     CardActions,
     CardContent,
     Divider,
-    IconButton,
+    IconButton, ListItemIcon, Menu, MenuItem,
     Typography
 } from "@mui/material";
-import {Form} from "entities/Form";
-import {IoEllipsisVerticalSharp} from "react-icons/io5";
+import {deleteForm, Form} from "entities/Form";
+import {IoEllipsisVerticalSharp, IoTrash} from "react-icons/io5";
 import {useNavigate} from "react-router-dom";
+import {useDispatch} from "react-redux";
 
 interface CardFormProps {
     data?: Form
@@ -19,6 +20,19 @@ interface CardFormProps {
 export const CardForm: FC<CardFormProps> = (props) => {
     const {data} = props;
     const navigate = useNavigate();
+    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+    const open = Boolean(anchorEl);
+    const handleClick = (event: MouseEvent<HTMLElement>) => {
+        setAnchorEl(event.currentTarget);
+    };
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
+    const dispatch = useDispatch();
+
+    const handleDeleteForm = () => {
+        dispatch(deleteForm({formId: data.id}))
+    }
     const toEditForm = () => {
         navigate('/edit')
     }
@@ -39,10 +53,25 @@ export const CardForm: FC<CardFormProps> = (props) => {
             </CardActionArea>
             <Divider/>
             <CardActions sx={{justifyContent: "flex-end"}}>
-                <IconButton>
+                <IconButton onClick={handleClick}>
                     <IoEllipsisVerticalSharp/>
                 </IconButton>
             </CardActions>
+            <Menu
+                anchorEl={anchorEl}
+                id="cardForm-menu"
+                open={open}
+                onClose={handleClose}
+                transformOrigin={{horizontal: 'center', vertical: 'top'}}
+                anchorOrigin={{horizontal: 'center', vertical: 'bottom'}}
+            >
+                <MenuItem onClick={handleDeleteForm}>
+                    <ListItemIcon>
+                        <IoTrash fontSize={22}/>
+                    </ListItemIcon>
+                    Удалить
+                </MenuItem>
+            </Menu>
         </Card>
     );
 };
