@@ -1,8 +1,8 @@
 import {RouteProps} from 'react-router-dom';
 import {Main} from "pages/Main";
-import {EditForm} from "pages/EditForm";
 import {NotFoundPage} from "pages/NotFoundPage";
 import {Auth} from "pages/Auth";
+import {Form} from "pages/Form";
 
 
 export enum AppRoutes {
@@ -35,7 +35,7 @@ export enum AppRoutesPrivate {
 
 export const RoutePathPrivate: Record<AppRoutesPrivate, string> = {
     [AppRoutesPrivate.MAIN]: '/',
-    [AppRoutesPrivate.EDIT_FORM]: '/edit',
+    [AppRoutesPrivate.EDIT_FORM]: '/form/',// + id
     [AppRoutesPrivate.NOT_FOUND]: '*',
 };
 
@@ -49,7 +49,7 @@ export const routeConfigPrivate: Record<AppRoutesPrivate, RouteProps> = {
         element: <NotFoundPage/>,
     },
     [AppRoutesPrivate.EDIT_FORM]: {
-        path: RoutePathPrivate.EDIT_FORM,
-        element: <EditForm/>,
+        path: `${RoutePathPrivate.EDIT_FORM}:id`,
+        element: <Form/>,
     },
 }

@@ -5,7 +5,7 @@ import {IoEllipsisVerticalSharp} from "react-icons/io5";
 interface EditFormAnswersProps {
 }
 
-export const EditFormAnswers: FC<EditFormAnswersProps> = ({}) => {
+const FormAnswers: FC<EditFormAnswersProps> = ({}) => {
     return (
         <>
             <Card>
@@ -21,3 +21,4 @@ export const EditFormAnswers: FC<EditFormAnswersProps> = ({}) => {
         </>
     );
 };
+export default FormAnswers
