@@ -1,7 +1,8 @@
 import {configureStore, ReducersMapObject} from '@reduxjs/toolkit'
 import {StateSchema} from "./StateSchema";
 import {userReducer} from "entities/User";
-import {createReducerManager} from "app/providers/StoreProvider/config/reducerManager";
+import {formReducer} from "entities/Form";
+import {createReducerManager} from "../config/reducerManager";
 
 
 export function createReduxStore(
@@ -11,6 +12,7 @@ export function createReduxStore(
     const rootReducer: ReducersMapObject<StateSchema> = {
         ...asyncReducers,
         user: userReducer,
+        forms: formReducer
     }
 
     const reducerManager = createReducerManager(rootReducer);

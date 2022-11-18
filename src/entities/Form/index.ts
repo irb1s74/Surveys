@@ -1,5 +1,10 @@
-import {IForm} from "./model/types/Form";
+export {Form} from "./model/types/Form";
 
 export {
-    IForm
-}
+    formActions,
+    formReducer,
+} from './model/slice/formSlice';
+
+export {getForms} from './model/service/getForms'
+
+export {getFormForms} from './model/selectors/getFormForms/getFormForms'

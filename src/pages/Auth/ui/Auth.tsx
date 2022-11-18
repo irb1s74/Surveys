@@ -1,7 +1,7 @@
 import {Suspense} from 'react';
 import {Stack} from "@mui/material";
 import {Loader} from "shared/ui/Loader/Loader";
-import AuthForm from "features/Auth/ui/AuthForm/AuthForm";
+import {AuthForm} from "features/Auth";
 
 
 const Auth = () => {

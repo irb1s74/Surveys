@@ -8,15 +8,15 @@ import {
     IconButton,
     Typography
 } from "@mui/material";
+import {Form} from "entities/Form";
 import {IoEllipsisVerticalSharp} from "react-icons/io5";
 import {useNavigate} from "react-router-dom";
-import {IForm} from "entities/Form";
 
-interface FormProps {
-    data?: IForm
+interface CardFormProps {
+    data?: Form
 }
 
-export const Form: FC<FormProps> = (props) => {
+export const CardForm: FC<CardFormProps> = (props) => {
     const {data} = props;
     const navigate = useNavigate();
     const toEditForm = () => {
