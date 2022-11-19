@@ -1,4 +1,5 @@
 export {Form} from "./model/types/Form";
+export {FormSchema} from "./model/types/Form";
 
 export {
     formActions,

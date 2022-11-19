@@ -14,10 +14,10 @@ import {addFormActions, addFormReducer} from "../../model/slice/addFormSlice";
 import {getAddFormTitle} from "../../model/selectors/getAddFormTitle/getAddFormTitle";
 import {getAddFormIsLoading} from "../../model/selectors/getAddFormIsLoading/getAddFormIsLoading";
 import {getAddFormError} from "../../model/selectors/getAddFormError/getAddFormError";
+import {createForm} from "../../model/services/createForm";
 import {useDispatch, useSelector} from "react-redux";
 import {ChangeEvent, FC, useCallback} from "react";
 import {IoClose} from "react-icons/io5";
-import {createForm} from "features/AddForm/model/services/createForm";
 import {getUserAuthData} from "entities/User";
 
 export interface AddFormFormProps {
