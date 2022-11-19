@@ -26,7 +26,7 @@ export const getFormById = createAsyncThunk<Form, getFormByIdProps, { rejectValu
 
             return response.data
         } catch (e) {
-
+            return thunkAPI.rejectWithValue("Форма не найдена");
         }
     }
 )

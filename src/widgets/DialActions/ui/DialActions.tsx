@@ -7,9 +7,9 @@ interface EditFormActionsProps {
 
 interface DialActions {
     icon: ReactNode,
-    name: string
+    name: string,
+    onClick?: () => void;
 }
-
 
 
 export const DialActions: FC<EditFormActionsProps> = ({actions}) => {
@@ -31,7 +31,7 @@ export const DialActions: FC<EditFormActionsProps> = ({actions}) => {
                     key={action.name}
                     icon={action.icon}
                     tooltipTitle={action.name}
-                    onClick={handleClose}
+                    onClick={action.onClick}
                 />
             ))}
         </SpeedDial>

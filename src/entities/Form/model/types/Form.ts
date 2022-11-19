@@ -1,4 +1,4 @@
-import {Questions} from "entities/Questions";
+import {Questions} from "./Questions";
 
 export interface Form {
     id: number,
