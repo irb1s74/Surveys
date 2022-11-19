@@ -1,5 +1,6 @@
-export {Form} from "./model/types/Form";
-export {FormSchema} from "./model/types/Form";
+export {Form,FormSchema } from "./model/types/Form";
+export {Questions} from "./model/types/Questions";
+export {Variant} from "./model/types/Variant";
 
 export {
     formActions,

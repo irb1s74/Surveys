@@ -72,7 +72,9 @@ const EditForm: FC<EditFormProps> = ({}) => {
                             <TextField fullWidth variant="standard" value={title} placeholder="Название формы"/>
                         </CardContent>
                     </Card>
-                    <Question/>
+                    {questions && questions.map((question) => (
+                        <Question key={question.id} data={question}/>
+                    ))}
                 </>
             )}
             <DialActions actions={actions}/>

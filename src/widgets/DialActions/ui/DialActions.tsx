@@ -20,7 +20,7 @@ export const DialActions: FC<EditFormActionsProps> = ({actions}) => {
     return (
         <SpeedDial
             ariaLabel="Добавить вопрос"
-            sx={{position: 'absolute', bottom: 16, right: 16}}
+            sx={{position: 'fixed', bottom: 16, right: 16}}
             icon={<SpeedDialIcon/>}
             onClose={handleClose}
             onOpen={handleOpen}

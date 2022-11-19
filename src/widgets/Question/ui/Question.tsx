@@ -13,6 +13,7 @@ import {
 import {IoTrash} from "react-icons/io5";
 import {Variant} from "shared/ui/Variant/Variant";
 import {QuestionHeader} from "./QuestionHeader";
+import {Questions} from "entities/Form";
 
 
 interface variants {
@@ -36,6 +37,7 @@ const mockVariants: variants[] = [
 ]
 
 interface QuestionProps {
+    data: Questions
 }
 
 export const Question: FC<QuestionProps> = () => {
