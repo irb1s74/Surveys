@@ -5,6 +5,6 @@ export interface Questions {
     formId: number;
     title: string | null;
     type: string;
-    multipleAnswers: boolean;
+    required: boolean;
     variants: Variant[] | undefined;
 }

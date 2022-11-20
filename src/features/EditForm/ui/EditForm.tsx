@@ -1,4 +1,4 @@
-import {FC, useEffect, useLayoutEffect} from 'react';
+import {FC, useCallback, useLayoutEffect} from 'react';
 import {
     Card, CardContent, Skeleton,
     TextField,
@@ -14,7 +14,11 @@ import {getFormById} from "../model/service/getFormById";
 import {useParams} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {getUserAuthData} from "entities/User";
-import {createQuestion} from "features/EditForm/model/service/createQuestion";
+import {createQuestion} from "../model/service/createQuestion";
+import {deleteQuestion} from "../model/service/deleteQuestion";
+import {updateQuestion} from "../model/service/updateQuestion";
+import {Questions} from "entities/Form";
+import {createVariant} from "features/EditForm/model/service/createVariant";
 
 
 interface EditFormProps {
@@ -28,10 +32,27 @@ const initialReducers: ReducersList = {
 const EditForm: FC<EditFormProps> = ({}) => {
     const dispatch = useDispatch();
     let {id} = useParams();
-    const authData = useSelector(getUserAuthData);
     const {title, questions} = useSelector(getEditFormFoundForm);
+    const authData = useSelector(getUserAuthData);
     const isLoading = useSelector(getEditFormIsLoading);
 
+    const handleDeleteQuestion = useCallback((questionId: number) => () => {
+        dispatch(deleteQuestion({questionId, token: authData.token}));
+    }, [])
+
+    const handleUpdateQuestion = useCallback((question: Questions) => {
+        dispatch(updateQuestion({
+            data: {formId: question.formId, title: question.title, type: question.type, required: question.required},
+            token: authData.token
+        }))
+    }, [])
+
+    const handleCreateVariant = useCallback((questionId: number) => {
+        dispatch(createVariant({
+            questionId,
+            token: authData.token
+        }))
+    }, [])
 
     const actions = [
         {
@@ -47,7 +68,7 @@ const EditForm: FC<EditFormProps> = ({}) => {
         {
             icon: <IoCheckbox size={22}/>,
             name: 'Варианты',
-            onClick: () => dispatch(createQuestion({token: authData.token, type: "variants", formId: id, title: ""}))
+            onClick: () => dispatch(createQuestion({token: authData.token, type: "radio", formId: id, title: ""}))
         },
         {
             icon: <IoText size={22}/>,
@@ -73,7 +94,12 @@ const EditForm: FC<EditFormProps> = ({}) => {
                         </CardContent>
                     </Card>
                     {questions && questions.map((question) => (
-                        <Question key={question.id} data={question}/>
+                        <Question
+                            key={question.id}
+                            data={question}
+                            onCreateVariant={handleCreateVariant}
+                            onDelete={handleDeleteQuestion}
+                            onUpdate={handleUpdateQuestion}/>
                     ))}
                 </>
             )}

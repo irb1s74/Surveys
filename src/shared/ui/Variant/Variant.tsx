@@ -1,30 +1,24 @@
 import {ChangeEvent, FC} from 'react';
 import {Checkbox, Radio, Stack, TextField} from "@mui/material";
-
-interface variants {
-    id: number;
-    text: string;
-}
+import {Variant} from "entities/Form";
 
 interface VariantProps {
-    variant: variants,
-    optionVariant: string,
-    selectedValue: number
-    setValue: (value: number) => void
+    variant: Variant,
+    type: string,
 }
 
-export const Variant: FC<VariantProps> = ({variant, optionVariant, setValue, selectedValue}) => {
+export const AnswerVariant: FC<VariantProps> = ({variant, type}) => {
     const onChange = (event: ChangeEvent<HTMLInputElement>) => {
-        setValue(+event.target.value)
+        // setValue(+event.target.value)
     }
     return (
         <Stack direction="row" alignItems="center" justifyContent="flex-start" spacing={2}>
-            {optionVariant === "checkbox" ?
+            {type === "checkbox" ?
                 (<Checkbox/>)
                 :
                 (
                     <Radio
-                        checked={selectedValue === variant.id}
+                        checked={variant.correct}
                         onChange={onChange}
                         value={variant.id}
                     />

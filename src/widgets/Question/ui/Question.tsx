@@ -1,4 +1,4 @@
-import {FC, useState} from 'react';
+import {ChangeEvent, useEffect, useRef, useState} from 'react';
 import {
     Button,
     Card,
@@ -8,77 +8,90 @@ import {
     FormControlLabel,
     IconButton,
     Stack,
-    Switch,
+    Switch, TextField,
 } from "@mui/material";
 import {IoTrash} from "react-icons/io5";
-import {Variant} from "shared/ui/Variant/Variant";
 import {QuestionHeader} from "./QuestionHeader";
 import {Questions} from "entities/Form";
+import {AnswerVariant} from "shared/ui/Variant/Variant";
+import useDebounce from "shared/lib/useDebounce/useDebounce";
 
-
-interface variants {
-    id: number;
-    text: string;
-}
-
-const mockVariants: variants[] = [
-    {
-        id: 0,
-        text: "Вариан 1"
-    },
-    {
-        id: 1,
-        text: "Вариан 2"
-    },
-    {
-        id: 2,
-        text: "Вариан 3"
-    }
-]
 
 interface QuestionProps {
-    data: Questions
+    data: Questions,
+    onDelete?: (questionId: number) => () => void;
+    onUpdate?: (question: Questions) => void;
+    onCreateVariant?: (questionId: number) => void;
 }
 
-export const Question: FC<QuestionProps> = () => {
-    const [optionVariants, setOption] = useState<string>('radio');
-    const [value, setValue] = useState<number>()
+export const Question = ({data, onDelete, onUpdate, onCreateVariant}: QuestionProps) => {
+    console.log(data);
+    const [question, setQuestion] = useState(data);
+    let isChanged = useRef(false);
+    const debouncedValue = useDebounce(question, 2000)
 
-    const handleSetOption = (option: string) => {
-        setOption(option)
+    useEffect(() => {
+        if (isChanged.current) {
+            onUpdate(question);
+        }
+    }, [debouncedValue])
+
+    const handleSetType = (type: string) => {
+        isChanged.current = true;
+        setQuestion({...question, type: type});
     }
-    const handleSetValue = (value: number) => {
-        setValue(value)
+
+    const handleSetTitle = (title: string) => {
+        isChanged.current = true;
+        setQuestion({...question, title: title});
+    }
+
+    const handleSetRequired = (event: ChangeEvent<HTMLInputElement>) => {
+        isChanged.current = true;
+        setQuestion({...question, required: event.target.checked});
+    }
+
+    const handleCreateVariant = () => {
+        onCreateVariant(question.id);
     }
 
     return (
         <Card>
             <CardContent>
-                <QuestionHeader option={optionVariants} setOption={handleSetOption}/>
+                <QuestionHeader
+                    title={question.title}
+                    type={question.type}
+                    setTitle={handleSetTitle}
+                    setType={handleSetType}
+                />
                 <Stack spacing={2}>
-                    {mockVariants.map((variant) => (
-                        <Variant
-                            key={variant.id}
-                            optionVariant={optionVariants}
-                            variant={variant}
-                            selectedValue={value}
-                            setValue={handleSetValue}
-                        />
-                    ))}
-                    <Button variant="text">Добавить</Button>
+                    {question.type === "radio" || question.type === "checkbox" ? (
+                        <>
+                            {data.variants && data.variants.map((variant) => (
+                                <AnswerVariant key={variant.id} variant={variant} type={question.type}/>
+                            ))}
+                            <Button onClick={handleCreateVariant} variant="text">Добавить</Button>
+                        </>
+                    ) : question.type === "text" ? (
+                        <TextField label="Ответ" disabled/>
+                    ) : (
+                        <div/>
+                    )}
                 </Stack>
             </CardContent>
             <Divider/>
             <CardActions sx={{justifyContent: "flex-end"}}>
                 <FormControlLabel
                     control={<Switch/>}
+                    onChange={handleSetRequired}
+                    checked={question.required}
                     label="Обязательный"
                 />
                 <Divider orientation="vertical" variant="middle" flexItem/>
-                <IconButton>
+                <IconButton onClick={onDelete(question.id)}>
                     <IoTrash/>
                 </IconButton>
             </CardActions>
         </Card>
     );
-};
+}

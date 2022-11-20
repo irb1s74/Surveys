@@ -1,7 +1,9 @@
 import {createSlice} from "@reduxjs/toolkit";
 import {EditFormSchema} from "../../model/types/editFormSchema";
 import {getFormById} from "../service/getFormById";
-import {createQuestion} from "features/EditForm/model/service/createQuestion";
+import {createQuestion} from "../service/createQuestion";
+import {deleteQuestion} from "../service/deleteQuestion";
+import {createVariant} from "features/EditForm/model/service/createVariant";
 
 const initialState: EditFormSchema = {
     form: undefined,
@@ -28,6 +30,12 @@ export const editFormSlice = createSlice({
                 state.error = action.payload;
             })
             .addCase(createQuestion.fulfilled, (state, action) => {
+                state.form = action.payload;
+            })
+            .addCase(deleteQuestion.fulfilled, (state, action) => {
+                state.form = action.payload;
+            })
+            .addCase(createVariant.fulfilled, (state, action) => {
                 state.form = action.payload;
             })
 

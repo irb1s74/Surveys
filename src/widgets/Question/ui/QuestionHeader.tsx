@@ -1,17 +1,23 @@
-import {FC, useState} from 'react';
+import {ChangeEvent, FC, useState} from 'react';
 import {MenuItem, Select, SelectChangeEvent, Stack, TextField} from "@mui/material";
 
 interface QuestionHeaderProps {
-    option: string;
-    setOption: (option: string) => void;
+    title: string;
+    type: string;
+    setTitle: (title: string) => void;
+    setType: (type: string) => void;
 }
 
-export const QuestionHeader: FC<QuestionHeaderProps> = ({option,setOption}) => {
+export const QuestionHeader: FC<QuestionHeaderProps> = ({type, setType, title, setTitle}) => {
     const [open, setOpen] = useState(false);
 
-    const handleChange = (event: SelectChangeEvent) => {
-        setOption(event.target.value);
+    const handleChangeType = (event: SelectChangeEvent) => {
+        setType(event.target.value);
     };
+    const handleChangeTitle = (event: ChangeEvent<HTMLInputElement>) => {
+        setTitle(event.target.value);
+    }
+
     const handleClose = () => {
         setOpen(false);
     };
@@ -19,21 +25,25 @@ export const QuestionHeader: FC<QuestionHeaderProps> = ({option,setOption}) => {
     const handleOpen = () => {
         setOpen(true);
     };
+
     return (
         <Stack direction="row" sx={{mb: "20px"}} justifyContent="space-between">
-            <TextField label="Вопрос"/>
+            <TextField label="Вопрос" value={title} onChange={handleChangeTitle}/>
             <Select
                 sx={{width: "252px", display: "flex"}}
                 open={open}
                 onClose={handleClose}
                 onOpen={handleOpen}
-                value={option}
-                onChange={handleChange}>
+                value={type}
+                onChange={handleChangeType}>
                 <MenuItem value="radio">
                     Один вариант
                 </MenuItem>
                 <MenuItem value="checkbox">
                     Несколько вариантов
+                </MenuItem>
+                <MenuItem value="text">
+                    Текст
                 </MenuItem>
             </Select>
         </Stack>
