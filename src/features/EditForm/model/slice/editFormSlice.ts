@@ -1,8 +1,7 @@
-import {createSlice} from "@reduxjs/toolkit";
+import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {EditFormSchema} from "../../model/types/editFormSchema";
 import {getFormById} from "../service/getFormById";
 import {createQuestion} from "../service/createQuestion";
-import {deleteQuestion} from "../service/deleteQuestion";
 import {createVariant} from "features/EditForm/model/service/createVariant";
 
 const initialState: EditFormSchema = {
@@ -14,10 +13,19 @@ const initialState: EditFormSchema = {
 export const editFormSlice = createSlice({
     name: "editForm",
     initialState,
-    reducers: {},
+    reducers: {
+        deleteQuestion: (state, action: PayloadAction<number>) => {
+            state.form.questions = state.form.questions.filter((question) => question.id !== action.payload);
+        },
+        deleteVariant: (state, action: PayloadAction<{ questionId: number, variantId: number }>) => {
+            const index = state.form.questions.findIndex((item) => item.id === action.payload.questionId)
+            state.form.questions[index].variants =
+                state.form.questions[index].variants.filter((variant) => variant.id !== action.payload.variantId);
+        }
+    },
     extraReducers: (builder) => {
         builder
-            .addCase(getFormById.pending, (state, action) => {
+            .addCase(getFormById.pending, (state) => {
                 state.isLoading = true;
                 state.error = undefined;
             })
@@ -30,9 +38,6 @@ export const editFormSlice = createSlice({
                 state.error = action.payload;
             })
             .addCase(createQuestion.fulfilled, (state, action) => {
-                state.form = action.payload;
-            })
-            .addCase(deleteQuestion.fulfilled, (state, action) => {
                 state.form = action.payload;
             })
             .addCase(createVariant.fulfilled, (state, action) => {

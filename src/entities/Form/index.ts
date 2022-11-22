@@ -1,6 +1,6 @@
 export {Form,FormSchema } from "./model/types/Form";
 export {Questions} from "./model/types/Questions";
-export {Variant} from "./model/types/Variant";
+export {Variants} from "./model/types/Variants";
 
 export {
     formActions,

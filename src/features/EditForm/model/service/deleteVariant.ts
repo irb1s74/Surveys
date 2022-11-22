@@ -1,19 +1,20 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
-import axios from "axios";
 import {getUrl} from "shared/lib/getUrl/getUrl";
-import {editFormActions} from "../slice/editFormSlice";
-import {Questions} from "entities/Form";
+import {Form} from "entities/Form";
+import axios from "axios";
+import {editFormActions} from "features/EditForm";
 
-interface deleteQuestionProps {
+interface deleteVariantProps {
     token: string;
+    variantId: number;
     questionId: number;
 }
 
-export const deleteQuestion = createAsyncThunk<Questions, deleteQuestionProps, { rejectValue: string }>(
-    "form/deleteQuestion",
-    async ({token, questionId}, thunkAPI) => {
+export const deleteVariant = createAsyncThunk<Form, deleteVariantProps, { rejectValue: string }>(
+    "form/deleteVariant",
+    async ({token, variantId, questionId}, thunkAPI) => {
         try {
-            const response = await axios.delete(`questions/delete/${questionId}`,
+            const response = await axios.delete(`variant/delete/${variantId}`,
                 {
                     baseURL: getUrl,
                     headers: {
@@ -24,7 +25,7 @@ export const deleteQuestion = createAsyncThunk<Questions, deleteQuestionProps, {
             if (!response.data) {
                 throw new Error();
             }
-            thunkAPI.dispatch(editFormActions.deleteQuestion(questionId))
+            thunkAPI.dispatch(editFormActions.deleteVariant({questionId, variantId}))
             return response.data
         } catch (e) {
             return thunkAPI.rejectWithValue("Произошла ошибка")

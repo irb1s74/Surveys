@@ -5,10 +5,10 @@ import {
 } from "@mui/material";
 import {IoImage, IoLogoYoutube, IoText, IoCheckbox} from "react-icons/io5";
 import {DialActions} from "widgets/DialActions";
-import {Question} from "widgets/Question/ui/Question";
 import {DynamicModuleLoader, ReducersList} from "shared/lib/components/DynamicModuleLoader";
 import {getEditFormFoundForm} from "../model/selectors/getEditFormFoundForm/getEditFormFoundForm";
 import {getEditFormIsLoading} from "../model/selectors/getEditFormIsLoading/getEditFormIsLoading";
+import {updateVariant} from "../model/service/updateVariant";
 import {editFormReducer} from "../model/slice/editFormSlice";
 import {getFormById} from "../model/service/getFormById";
 import {useParams} from "react-router-dom";
@@ -17,9 +17,10 @@ import {getUserAuthData} from "entities/User";
 import {createQuestion} from "../model/service/createQuestion";
 import {deleteQuestion} from "../model/service/deleteQuestion";
 import {updateQuestion} from "../model/service/updateQuestion";
-import {Questions} from "entities/Form";
 import {createVariant} from "features/EditForm/model/service/createVariant";
-
+import {deleteVariant} from "features/EditForm/model/service/deleteVariant";
+import {Questions, Variants} from "entities/Form";
+import {Question} from "widgets/Question";
 
 interface EditFormProps {
 
@@ -50,6 +51,26 @@ const EditForm: FC<EditFormProps> = ({}) => {
     const handleCreateVariant = useCallback((questionId: number) => {
         dispatch(createVariant({
             questionId,
+            token: authData.token
+        }))
+    }, [])
+
+    const handleUpdateVariant = useCallback((variant: Variants) => {
+        dispatch(updateVariant({
+            data: {
+                variantId: variant.id,
+                questionId: variant.questionId,
+                title: variant.title,
+                correct: variant.correct,
+            },
+            token: authData.token
+        }))
+    }, [])
+
+    const handleDeleteVariant = useCallback((variantId: number, questionId: number) => {
+        dispatch(deleteVariant({
+            variantId: variantId,
+            questionId: questionId,
             token: authData.token
         }))
     }, [])
@@ -97,9 +118,12 @@ const EditForm: FC<EditFormProps> = ({}) => {
                         <Question
                             key={question.id}
                             data={question}
-                            onCreateVariant={handleCreateVariant}
                             onDelete={handleDeleteQuestion}
-                            onUpdate={handleUpdateQuestion}/>
+                            onUpdate={handleUpdateQuestion}
+                            onCreateVariant={handleCreateVariant}
+                            onUpdateVariant={handleUpdateVariant}
+                            onDeleteVariant={handleDeleteVariant}
+                        />
                     ))}
                 </>
             )}

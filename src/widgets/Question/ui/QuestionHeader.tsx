@@ -45,6 +45,12 @@ export const QuestionHeader: FC<QuestionHeaderProps> = ({type, setType, title, s
                 <MenuItem value="text">
                     Текст
                 </MenuItem>
+                <MenuItem value="image">
+                    Изображение
+                </MenuItem>
+                <MenuItem value="video">
+                    Видео
+                </MenuItem>
             </Select>
         </Stack>
     );
