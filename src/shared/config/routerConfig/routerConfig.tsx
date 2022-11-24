@@ -2,6 +2,7 @@ import {RouteProps} from 'react-router-dom';
 import {Main} from "pages/Main";
 import {NotFoundPage} from "pages/NotFoundPage";
 import {Auth} from "pages/Auth";
+import {FormAdmin} from "pages/FormAdmin";
 import {Form} from "pages/Form";
 
 
@@ -30,12 +31,14 @@ export const routeConfig: Record<AppRoutes, RouteProps> = {
 export enum AppRoutesPrivate {
     MAIN = 'MAIN',
     EDIT_FORM = 'EDIT_FORM',
+    FORM = 'FORM',
     NOT_FOUND = 'NOT_FOUND'
 }
 
 export const RoutePathPrivate: Record<AppRoutesPrivate, string> = {
     [AppRoutesPrivate.MAIN]: '/',
-    [AppRoutesPrivate.EDIT_FORM]: '/form/',// + id
+    [AppRoutesPrivate.EDIT_FORM]: '/form/edit/',// + id
+    [AppRoutesPrivate.FORM]: '/form/',// + id
     [AppRoutesPrivate.NOT_FOUND]: '*',
 };
 
@@ -50,6 +53,10 @@ export const routeConfigPrivate: Record<AppRoutesPrivate, RouteProps> = {
     },
     [AppRoutesPrivate.EDIT_FORM]: {
         path: `${RoutePathPrivate.EDIT_FORM}:id`,
+        element: <FormAdmin/>,
+    },
+    [AppRoutesPrivate.FORM]: {
+        path: `${RoutePathPrivate.FORM}:id`,
         element: <Form/>,
     },
 }

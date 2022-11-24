@@ -3,14 +3,16 @@ import {AuthSchema} from "features/Auth";
 import {UserSchema} from "entities/User";
 import {FormSchema} from "entities/Form";
 import {AddFormSchema} from "features/AddForm";
-import {EditFormSchema} from "features/EditForm";
+import {FormEditorSchema} from "features/FormEditor";
+import {FormReplySchema} from "features/FormReply";
 
 export interface StateSchema {
     user: UserSchema,
     forms: FormSchema
     authForm?: AuthSchema,
     addForm?: AddFormSchema,
-    editForm?: EditFormSchema
+    formEditor?: FormEditorSchema,
+    formReply?: FormReplySchema
 }
 
 export type StateSchemaKey = keyof StateSchema;

@@ -1,4 +1,4 @@
-import {Variant} from "./Variant";
+import {Variants} from "./Variants";
 
 export interface Questions {
     id: number;
@@ -6,5 +6,5 @@ export interface Questions {
     title: string | null;
     type: string;
     required: boolean;
-    variants: Variant[] | undefined;
+    variants: Variants[] | undefined;
 }

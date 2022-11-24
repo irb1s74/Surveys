@@ -6,16 +6,6 @@ import {AddFormModal} from "features/AddForm";
 import {Form, getFormForms, getForms} from "entities/Form";
 import {useDispatch, useSelector} from "react-redux";
 
-
-const mockForms: Form[] = [
-    {
-        id: 0,
-        title: "Опрос 1",
-        userId: 1,
-        questions: []
-    }
-]
-
 interface MainProps {
 }
 

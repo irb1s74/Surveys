@@ -34,7 +34,7 @@ export const CardForm: FC<CardFormProps> = (props) => {
         dispatch(deleteForm({formId: data.id}))
     }
     const toEditForm = () => {
-        navigate(`form/${data.id}`);
+        navigate(`form/edit/${data.id}`);
     }
     return (
         <Card sx={{

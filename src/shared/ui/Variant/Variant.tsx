@@ -18,7 +18,6 @@ const Variant: FC<VariantProps> = ({variant, type, onDelete, onUpdate, correctRa
     const isChanged = useRef(false);
     const debouncedValue = useDebounce(data, 650);
 
-
     useEffect(() => {
         if (isChanged.current) {
             onUpdate(data);
@@ -30,7 +29,7 @@ const Variant: FC<VariantProps> = ({variant, type, onDelete, onUpdate, correctRa
             isChanged.current = true;
             setData({...data, correct: false})
         }
-    }, [correctRadio])
+    }, [correctRadio, type])
 
     const handleRadioChange = () => {
         isChanged.current = true;
@@ -42,6 +41,11 @@ const Variant: FC<VariantProps> = ({variant, type, onDelete, onUpdate, correctRa
             setData({...data, correct: !data.correct})
         }
     };
+
+    const handleCheckboxChange = () => {
+        isChanged.current = true;
+        setData({...data, correct: !data.correct})
+    }
 
     const handleOnChangeTitle = (event: ChangeEvent<HTMLInputElement>) => {
         isChanged.current = true;
@@ -55,7 +59,7 @@ const Variant: FC<VariantProps> = ({variant, type, onDelete, onUpdate, correctRa
     return (
         <Stack sx={{mb: '20px'}} direction="row" alignItems="center" justifyContent="flex-start" spacing={2}>
             {type === "checkbox" ?
-                (<Checkbox/>)
+                (<Checkbox checked={data.correct} onClick={handleCheckboxChange}/>)
                 :
                 (
                     <Radio
