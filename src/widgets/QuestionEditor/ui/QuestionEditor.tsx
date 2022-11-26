@@ -35,7 +35,6 @@ const QuestionEditor = ({
     onUpdateVariant
 }: QuestionEditorProps) => {
     const [question, setQuestion] = useState(data);
-    const [correctRadio, setCorrectRadio] = useState(data.type === "radio" && data.variants.find((variant) => variant.correct)?.id);
     const debouncedValue = useDebounce(question, 650)
     const isChanged = useRef(false);
 
@@ -65,10 +64,6 @@ const QuestionEditor = ({
         onCreateVariant(question.id);
     }, [])
 
-    const handleSetCorrectRadioVariant = useCallback((variantId: number) => {
-        setCorrectRadio(variantId);
-    }, [])
-
     return (
         <Card>
             <CardContent>
@@ -86,8 +81,6 @@ const QuestionEditor = ({
                                     key={variant.id}
                                     variant={variant}
                                     type={question.type}
-                                    correctRadio={correctRadio}
-                                    setCorrectRadio={handleSetCorrectRadioVariant}
                                     onDelete={onDeleteVariant}
                                     onUpdate={onUpdateVariant}
                                 />

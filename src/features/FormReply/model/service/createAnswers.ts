@@ -1,23 +1,24 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
+import {Reply} from "entities/Reply";
 import axios from "axios";
 import {getUrl} from "shared/lib/getUrl/getUrl";
-import {Variants} from "entities/Form";
 
-interface updateVariantProps {
-    data: {
-        variantId: number;
-        questionId: number;
-        title: string;
-    }
-    token: string
+interface createAnswersProps {
+    questionId: number;
+    title: string;
+    replyId: number
+    token: string;
 }
 
-export const updateVariant = createAsyncThunk<Variants, updateVariantProps, { rejectValue: string }>(
-    "form/updateVariant",
-    async ({data, token}, thunkAPI) => {
+export const createAnswers = createAsyncThunk<Reply, createAnswersProps, { rejectValue: string }>("reply/createAnswers",
+    async ({token, questionId, title, replyId}, thunkAPI) => {
         try {
-            const response = await axios.post("variant/update",
-                data,
+            const response = await axios.post("answers/create",
+                {
+                    questionId,
+                    title,
+                    replyId
+                },
                 {
                     baseURL: getUrl,
                     headers: {

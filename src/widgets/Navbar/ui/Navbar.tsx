@@ -5,14 +5,13 @@ import {
     Slide,
     Stack,
     Toolbar,
-    Typography,
     useScrollTrigger,
 } from "@mui/material";
-import {FcDocument} from "react-icons/fc";
 import {NavbarActions} from "./NavbarActions";
 import {Link} from "react-router-dom";
 import {useSelector} from "react-redux";
 import {getUserAuthData} from "entities/User";
+import LogoParma from "shared/assets/icons/logoParma.svg"
 
 interface NavbarProps {
     window?: () => Window;
@@ -25,17 +24,14 @@ export const Navbar: FC<NavbarProps> = ({window}) => {
     });
     return (
         <Slide appear={false} direction="down" in={!trigger}>
-            <AppBar color="secondary">
+            <AppBar color="secondary" sx={{maxHeight:"75px"}}>
                 <Toolbar>
                     <Stack sx={{flexGrow: 1}} direction='row' alignItems='center'>
                         <Link to='/'>
                             <IconButton>
-                                <FcDocument size={34}/>
+                                <LogoParma style={{width: "205px", height: "75px"}}/>
                             </IconButton>
                         </Link>
-                        <Typography variant='h4'>
-                            PARMA forms
-                        </Typography>
                     </Stack>
                     {authData && (
                         <NavbarActions authData={authData}/>

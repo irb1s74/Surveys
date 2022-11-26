@@ -19,7 +19,7 @@ import {updateQuestion} from "../model/service/updateQuestion";
 import {createVariant} from "features/FormEditor/model/service/createVariant";
 import {deleteVariant} from "features/FormEditor/model/service/deleteVariant";
 import {getFormById, Questions, Variants} from "entities/Form";
-import { QuestionEditor } from 'widgets/QuestionEditor';
+import {QuestionEditor} from 'widgets/QuestionEditor';
 
 interface EditFormProps {
 
@@ -60,7 +60,6 @@ const FormEditor: FC<EditFormProps> = ({}) => {
                 variantId: variant.id,
                 questionId: variant.questionId,
                 title: variant.title,
-                correct: variant.correct,
             },
             token: authData.token
         }))
@@ -104,12 +103,7 @@ const FormEditor: FC<EditFormProps> = ({}) => {
 
     return (
         <DynamicModuleLoader reducers={initialReducers}>
-            {isLoading ? (
-                <>
-                    <Skeleton variant="rounded" width="100%" height="150px"/>
-                    <Skeleton variant="rounded" width="100%" height="500px"/>
-                </>
-            ) : (
+            {!isLoading && (
                 <>
                     <Card>
                         <CardContent>
