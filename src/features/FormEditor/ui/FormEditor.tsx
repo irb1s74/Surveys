@@ -1,6 +1,6 @@
 import {FC, useCallback, useEffect} from 'react';
 import {
-    Card, CardContent, Skeleton,
+    Card, CardContent, Fab,
     TextField,
 } from "@mui/material";
 import {IoImage, IoLogoYoutube, IoText, IoCheckbox} from "react-icons/io5";
@@ -10,7 +10,7 @@ import {getFormEditorFoundForm} from "../model/selectors/getFormEditorFoundForm/
 import {getFormEditorIsLoading} from "../model/selectors/getFormEditorIsLoading/getFormEditorIsLoading";
 import {updateVariant} from "../model/service/updateVariant";
 import {formEditorReducer} from "../model/slice/formEditorSlice";
-import {useParams} from "react-router-dom";
+import {Link, useParams} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {getUserAuthData} from "entities/User";
 import {createQuestion} from "../model/service/createQuestion";
@@ -20,6 +20,7 @@ import {createVariant} from "features/FormEditor/model/service/createVariant";
 import {deleteVariant} from "features/FormEditor/model/service/deleteVariant";
 import {getFormById, Questions, Variants} from "entities/Form";
 import {QuestionEditor} from 'widgets/QuestionEditor';
+import {IoEye} from "react-icons/io5";
 
 interface EditFormProps {
 
@@ -123,6 +124,11 @@ const FormEditor: FC<EditFormProps> = ({}) => {
                     ))}
                 </>
             )}
+            <Link to={`/form/${id}`}>
+                <Fab sx={{position: 'fixed', bottom: 86, right: 16}} color="secondary">
+                    <IoEye size={20}/>
+                </Fab>
+            </Link>
             <DialActions actions={actions}/>
         </DynamicModuleLoader>
     );

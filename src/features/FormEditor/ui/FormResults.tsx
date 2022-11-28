@@ -34,7 +34,7 @@ const FormResults: FC<EditFormAnswersProps> = ({}) => {
 
     const toFormData = (reply: Reply[]): DataStatistic[] => {
         const returnData: DataStatistic[] = []
-        reply.forEach((oneReply) => {
+        reply?.forEach((oneReply) => {
             oneReply.answers.forEach((answer) => {
                 const checkAnswer = returnData.find((data) => data.title === findQuestionById(answer.questionId).title)// вопрос
                 if (checkAnswer) {
@@ -66,7 +66,7 @@ const FormResults: FC<EditFormAnswersProps> = ({}) => {
                     <Card>
                         <CardContent>
                             <Stack direction="row" justifyContent="space-between">
-                                <Typography variant="h5">{reply.length} ответов</Typography>
+                                <Typography variant="h5">{reply?.length || 0} ответов</Typography>
                             </Stack>
                         </CardContent>
                     </Card>

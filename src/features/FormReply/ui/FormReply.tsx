@@ -1,26 +1,22 @@
-import {DynamicModuleLoader, ReducersList} from "shared/lib/components/DynamicModuleLoader";
+import {useEffect} from "react";
+import {useParams} from "react-router-dom";
+import {useFormik} from "formik";
 import {formReplyReducer} from "../model/slice/formReplySlice";
 import {getFormReplyFoundForm} from "../model/selectors/getFormReplyFounForm/getFormReplyFoundForm";
 import {getFormReplyIsLoading} from "../model/selectors/getFormReplyIsLoading/getFormReplyIsLoading";
 import {findOreCreateReply} from "../model/service/findOreCreateReply";
 import {getFormReplyFoundReply} from "../model/selectors/getFormReplyFoundReply/getFormReplyFoundReply";
-import {sendReply} from "../model/service/sendReply";
-import {useCallback, useEffect,} from "react";
+import {saveReply} from "../model/service/sendReply";
 import {useDispatch, useSelector} from "react-redux";
-import {useParams} from "react-router-dom";
 import {getUserAuthData} from "entities/User";
-import {Button, Card, CardHeader, Stack,} from "@mui/material";
+import {Button, Card, CardHeader, Stack} from "@mui/material";
 import {Question} from "widgets/Question";
-import {createAnswers} from "features/FormReply/model/service/createAnswers";
-
+import {DynamicModuleLoader, ReducersList} from "shared/lib/components/DynamicModuleLoader";
+import {createYupSchema} from "shared/lib/createValidation/createValidation";
+import * as yup from "yup";
 
 const initialReducers: ReducersList = {
     formReply: formReplyReducer
-}
-
-interface Reply {
-    questionId: number;
-    title: string;
 }
 
 const FormReply = () => {
@@ -37,38 +33,47 @@ const FormReply = () => {
         }
     }, [id])
 
-    const handleSetReply = useCallback(({questionId,title}: Reply) => {
-        dispatch(createAnswers({
-            replyId: reply.id,
-            questionId,
-            title,
-            token: authData.token
-        }))
-    }, [reply.id])
+    let initialValues = {};
+    form?.questions?.forEach(item => {
+        initialValues = {...initialValues, [item.id]: item.type === "checkbox" ? [] : ""}
+    });
+    const yepSchema = form?.questions?.reduce(createYupSchema, {});
+    const validateSchema = yup.object().shape(yepSchema);
 
-    const handleSendReply = () => {
-        dispatch(sendReply({replyId: reply.id, token: authData.token}));
-    }
+    const formik = useFormik({
+        initialValues: initialValues,
+        validationSchema: validateSchema,
+        onSubmit: (values) => {
+            dispatch(saveReply({replyId: reply.id, token: authData.token, answers: values}))
+        },
+    });
 
     return (
         <DynamicModuleLoader reducers={initialReducers}>
             {!isLoading && (
-                <>
-                    <Card>
-                        <CardHeader title={form.title}/>
-                    </Card>
-                    {form.questions && form.questions.map((question) => (
-                        <Question
-                            key={question.id}
-                            data={question}
-                            setReply={handleSetReply}
-                        />
-                    ))}
-                    <Stack direction="row" alignItems="center" justifyContent="space-between">
-                        <Button onClick={handleSendReply} variant="contained">Отправить</Button>
-                        <Button>Очистить форму</Button>
+                <form onSubmit={formik.handleSubmit}>
+                    <Stack direction='column' sx={{pt: "10px", pb: "10px"}} spacing={2}>
+                        <Card>
+                            <CardHeader title={form.title}/>
+                        </Card>
+                        {form?.questions?.map((question) => (
+                            <Question
+                                key={question.id}
+                                data={question}
+                                value={formik.values[question.id as keyof typeof initialValues]}
+                                error={
+                                    formik.touched[question.id as keyof typeof initialValues] &&
+                                    formik.errors[question.id as keyof typeof initialValues]
+                                }
+                                handleChange={formik.handleChange}
+                            />
+                        ))}
+                        <Stack direction="row" alignItems="center" justifyContent="space-between">
+                            <Button type="submit" variant="contained">Отправить</Button>
+                            <Button onClick={formik.handleReset}>Очистить форму</Button>
+                        </Stack>
                     </Stack>
-                </>
+                </form>
             )}
         </DynamicModuleLoader>
     );

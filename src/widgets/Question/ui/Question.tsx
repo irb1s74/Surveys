@@ -1,46 +1,31 @@
-import {ChangeEvent, memo, useCallback, useEffect, useRef, useState} from 'react';
+import {memo} from 'react';
 import {
     Card,
     CardContent, CardHeader,
     Stack,
-    TextField,
+    TextField, Typography,
 } from "@mui/material";
 import {Questions} from "entities/Form";
 import Variant from "shared/ui/Variant/Variant";
-import useDebounce from "shared/lib/useDebounce/useDebounce";
 
 
 interface QuestionEditorProps {
     data: Questions,
-    setReply: ({}: {
-        questionId: number;
-        title: string;
-    }) => void
+    value: string | string[],
+    error?: string,
+    handleChange: any
 }
 
 const Question = ({
     data,
-    setReply,
+    value,
+    handleChange,
+    error
 }: QuestionEditorProps) => {
-    const [title, setTitle] = useState("");
-    const isChangedQuestion = useRef(false);
-    const debouncedValue = useDebounce(title, 650)
-
-    const handleOnChangeText = (event: ChangeEvent<HTMLInputElement>) => {
-        isChangedQuestion.current = true;
-        setTitle(event.target.value);
-    }
-
-    useEffect(() => {
-        if (isChangedQuestion.current) {
-            setReply({questionId: data.id, title: title})
-        }
-    }, [debouncedValue])
 
     return (
         <Card>
-            <CardHeader title={`${data.title || ""} ${data.required && "*"}`}
-            />
+            <CardHeader title={`${data.title || ""} ${data.required && "*"}`}/>
             <CardContent>
                 <Stack direction="column">
                     {data.type === "radio" || data.type === "checkbox" ? (
@@ -50,14 +35,19 @@ const Question = ({
                                 variant={variant}
                                 type={data.type}
                                 editor={false}
+                                onChange={handleChange}
+                                value={value}
                             />
                         ))
                     ) : data.type === "text" ? (
-                        <TextField onChange={handleOnChangeText} label="Мой Ответ" fullWidth/>
+                        <TextField name={`${data.id}`} value={value} onChange={handleChange} label="Мой Ответ" fullWidth/>
                     ) : (
                         <div/>
                     )}
                 </Stack>
+                {error && (
+                    <Typography color="error">{error}</Typography>
+                )}
             </CardContent>
         </Card>
     );

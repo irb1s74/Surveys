@@ -9,15 +9,19 @@ interface VariantProps {
     type: string;
     onDelete?: (variantId: number, questionId: number) => void;
     onUpdate?: (variant: Variants) => void;
-    editor?: boolean
+    onChange?: any;
+    editor?: boolean;
+    value?: string[] | string;
 }
 
 const Variant: FC<VariantProps> = ({
     variant,
     type,
+    onChange,
     onDelete,
     onUpdate,
-    editor = true
+    editor = true,
+    value
 }) => {
     const [data, setData] = useState(variant);
     const isChanged = useRef(false);
@@ -44,9 +48,7 @@ const Variant: FC<VariantProps> = ({
                 {type === "checkbox" ?
                     (<Checkbox disabled/>)
                     :
-                    (
-                        <Radio disabled/>
-                    )
+                    (<Radio disabled/>)
                 }
                 <TextField variant="filled" label="Вариант ответа" value={data.title} onChange={handleOnChangeTitle}/>
                 <IconButton onClick={handleDelete}>
@@ -55,13 +57,23 @@ const Variant: FC<VariantProps> = ({
             </Stack>
         );
     }
-
     return (
         <Stack sx={{mb: '20px', flex: 0.5}} direction="row" alignItems="center" justifyContent="flex-start" spacing={2}>
-            {type === "checkbox" ?
-                (<Checkbox/>)
-                :
-                (<Radio/>)
+
+            {type === "checkbox" ? (
+                <Checkbox
+                    name={`${variant.questionId}`}
+                    value={variant.title}
+                    onChange={onChange}
+                />
+            ) : (
+                <Radio
+                    name={`${variant.questionId}`}
+                    checked={value === variant.title}
+                    value={variant.title}
+                    onChange={onChange}
+                />
+            )
             }
             <Typography>{data.title}</Typography>
         </Stack>

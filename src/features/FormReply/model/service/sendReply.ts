@@ -4,16 +4,18 @@ import axios from "axios";
 import {getUrl} from "shared/lib/getUrl/getUrl";
 
 interface sendReplyProps {
-    replyId: number
+    replyId: number;
     token: string;
+    answers: Record<number, string | string[]>
 }
 
-export const sendReply = createAsyncThunk<Reply, sendReplyProps, { rejectValue: string }>("reply/sendReply",
-    async ({token, replyId}, thunkAPI) => {
+export const saveReply = createAsyncThunk<Reply, sendReplyProps, { rejectValue: string }>("reply/sendReply",
+    async ({token, replyId, answers}, thunkAPI) => {
         try {
             const response = await axios.post("answers/reply",
                 {
-                    replyId
+                    replyId,
+                    answers
                 },
                 {
                     baseURL: getUrl,
