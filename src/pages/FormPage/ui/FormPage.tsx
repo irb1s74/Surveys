@@ -1,7 +1,7 @@
 import {Container} from "@mui/material";
 import {FormReply} from "features/FormReply";
 
-const Form = () => {
+const FormPage = () => {
 
     return (
         <Container maxWidth='md'>
@@ -10,4 +10,4 @@ const Form = () => {
     );
 };
 
-export default Form;
+export default FormPage;

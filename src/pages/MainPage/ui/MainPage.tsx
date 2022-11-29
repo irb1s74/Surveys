@@ -5,12 +5,14 @@ import {CardForm} from "widgets/CardForm";
 import {AddFormModal} from "features/AddForm";
 import {Form, getFormForms, getForms} from "entities/Form";
 import {useDispatch, useSelector} from "react-redux";
+import {getUserAuthData} from "entities/User";
 
 interface MainProps {
 }
 
-const Main: FC<MainProps> = () => {
+const MainPage: FC<MainProps> = () => {
     const dispatch = useDispatch();
+    const authData = useSelector(getUserAuthData);
     const [addForm, setAddForm] = useState(false);
     const forms = useSelector(getFormForms)
 
@@ -25,9 +27,11 @@ const Main: FC<MainProps> = () => {
     return (
         <Container maxWidth='xl'>
             <Grid container spacing={3}>
-                <Grid item xl={2}>
-                    <CardAddForm onClick={onOpen}/>
-                </Grid>
+                {authData.role === "HR" && (
+                    <Grid item xl={2}>
+                        <CardAddForm onClick={onOpen}/>
+                    </Grid>
+                )}
                 {forms.map((form) => (
                     <Grid key={form.id} item xl={2}>
                         <CardForm data={form}/>
@@ -38,4 +42,4 @@ const Main: FC<MainProps> = () => {
         </Container>
     );
 };
-export default Main
+export default MainPage

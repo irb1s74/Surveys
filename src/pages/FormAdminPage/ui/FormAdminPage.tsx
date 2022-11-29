@@ -1,8 +1,9 @@
 import {SyntheticEvent, useState} from 'react';
 import {Card, Container, Stack, Tab, Tabs} from "@mui/material";
-import {FormEditor, FormResults} from "features/FormEditor";
+import {FormEditor} from "features/FormEditor";
+import {FormResults} from "features/FormResults";
 
-const FormAdmin = () => {
+const FormAdminPage = () => {
     const [tab, setTab] = useState('questions');
 
     const handleChangeTab = (event: SyntheticEvent, newValue: string) => {
@@ -28,4 +29,4 @@ const FormAdmin = () => {
     );
 };
 
-export default FormAdmin;
+export default FormAdminPage;

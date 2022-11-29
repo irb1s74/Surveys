@@ -3,7 +3,8 @@ export interface User {
     email: string;
     token: string
     full_name: string;
-    avatar: string | null
+    avatar: string | null;
+    role: string;
 }
 
 

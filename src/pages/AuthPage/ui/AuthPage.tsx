@@ -4,7 +4,7 @@ import {Loader} from "shared/ui/Loader/Loader";
 import {AuthForm} from "features/Auth";
 
 
-const Auth = () => {
+const AuthPage = () => {
     return (
         <Stack sx={{height: "100%"}} justifyContent="center" alignItems="center">
             <Suspense fallback={<Loader/>}>
@@ -14,4 +14,4 @@ const Auth = () => {
     );
 };
 
-export default Auth;
+export default AuthPage;

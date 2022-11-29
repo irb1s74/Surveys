@@ -21,6 +21,7 @@ import {deleteVariant} from "features/FormEditor/model/service/deleteVariant";
 import {getFormById, Questions, Variants} from "entities/Form";
 import {QuestionEditor} from 'widgets/QuestionEditor';
 import {IoEye} from "react-icons/io5";
+import {PageLoader} from "widgets/PageLoader";
 
 interface EditFormProps {
 
@@ -104,7 +105,7 @@ const FormEditor: FC<EditFormProps> = ({}) => {
 
     return (
         <DynamicModuleLoader reducers={initialReducers}>
-            {!isLoading && (
+            {!isLoading ? (
                 <>
                     <Card>
                         <CardContent>
@@ -122,14 +123,14 @@ const FormEditor: FC<EditFormProps> = ({}) => {
                             onDeleteVariant={handleDeleteVariant}
                         />
                     ))}
+                    <Link to={`/form/${id}`}>
+                        <Fab sx={{position: 'fixed', bottom: 86, right: 16}} color="secondary">
+                            <IoEye size={20}/>
+                        </Fab>
+                    </Link>
+                    <DialActions actions={actions}/>
                 </>
-            )}
-            <Link to={`/form/${id}`}>
-                <Fab sx={{position: 'fixed', bottom: 86, right: 16}} color="secondary">
-                    <IoEye size={20}/>
-                </Fab>
-            </Link>
-            <DialActions actions={actions}/>
+            ) : <PageLoader/>}
         </DynamicModuleLoader>
     );
 };

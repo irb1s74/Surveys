@@ -5,6 +5,7 @@ import {FormSchema} from "entities/Form";
 import {AddFormSchema} from "features/AddForm";
 import {FormEditorSchema} from "features/FormEditor";
 import {FormReplySchema} from "features/FormReply";
+import {FormResultsSchema} from "features/FormResults";
 
 export interface StateSchema {
     user: UserSchema,
@@ -12,6 +13,7 @@ export interface StateSchema {
     authForm?: AuthSchema,
     addForm?: AddFormSchema,
     formEditor?: FormEditorSchema,
+    formResults?: FormResultsSchema,
     formReply?: FormReplySchema
 }
 

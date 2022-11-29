@@ -11,7 +11,7 @@ const initialState: FormEditorSchema = {
 }
 
 export const formEditorSlice = createSlice({
-    name: "editForm",
+    name: "formEditor",
     initialState,
     reducers: {
         deleteQuestion: (state, action: PayloadAction<number>) => {

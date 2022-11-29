@@ -11,7 +11,8 @@ import {
 import {deleteForm, Form} from "entities/Form";
 import {IoEllipsisVerticalSharp, IoTrash} from "react-icons/io5";
 import {useNavigate} from "react-router-dom";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+import {getUserAuthData} from "entities/User";
 
 interface CardFormProps {
     data?: Form
@@ -21,6 +22,7 @@ export const CardForm: FC<CardFormProps> = (props) => {
     const {data} = props;
     const navigate = useNavigate();
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+    const authData = useSelector(getUserAuthData);
     const open = Boolean(anchorEl);
     const handleClick = (event: MouseEvent<HTMLElement>) => {
         setAnchorEl(event.currentTarget);
@@ -34,7 +36,11 @@ export const CardForm: FC<CardFormProps> = (props) => {
         dispatch(deleteForm({formId: data.id}))
     }
     const toEditForm = () => {
-        navigate(`form/edit/${data.id}`);
+        if (authData.role === "employee") {
+            navigate(`form/${data.id}`);
+        } else {
+            navigate(`form/edit/${data.id}`);
+        }
     }
     return (
         <Card sx={{

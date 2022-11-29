@@ -1,5 +1,5 @@
 import {useEffect} from "react";
-import {useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import {useFormik} from "formik";
 import {formReplyReducer} from "../model/slice/formReplySlice";
 import {getFormReplyFoundForm} from "../model/selectors/getFormReplyFounForm/getFormReplyFoundForm";
@@ -26,7 +26,7 @@ const FormReply = () => {
     const isLoading = useSelector(getFormReplyIsLoading)
     const form = useSelector(getFormReplyFoundForm)
     const reply = useSelector(getFormReplyFoundReply)
-
+    const navigate = useNavigate();
     useEffect(() => {
         if (id) {
             dispatch(findOreCreateReply({formId: id, token: authData.token}));
@@ -45,6 +45,7 @@ const FormReply = () => {
         validationSchema: validateSchema,
         onSubmit: (values) => {
             dispatch(saveReply({replyId: reply.id, token: authData.token, answers: values}))
+            navigate(`/form/results/${id}`);
         },
     });
 

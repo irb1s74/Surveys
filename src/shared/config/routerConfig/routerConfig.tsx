@@ -1,9 +1,10 @@
 import {RouteProps} from 'react-router-dom';
-import {Main} from "pages/Main";
+import {MainPage} from "pages/MainPage";
 import {NotFoundPage} from "pages/NotFoundPage";
-import {Auth} from "pages/Auth";
-import {FormAdmin} from "pages/FormAdmin";
-import {Form} from "pages/Form";
+import {AuthPage} from "pages/AuthPage";
+import {FormAdminPage} from "pages/FormAdminPage";
+import {FormPage} from "pages/FormPage";
+import {FormResultsPage} from "pages/FormResultsPage";
 
 
 export enum AppRoutes {
@@ -23,7 +24,7 @@ export const routeConfig: Record<AppRoutes, RouteProps> = {
     },
     [AppRoutes.AUTH]: {
         path: RoutePath.AUTH,
-        element: <Auth/>,
+        element: <AuthPage/>,
     },
 };
 
@@ -32,6 +33,7 @@ export enum AppRoutesPrivate {
     MAIN = 'MAIN',
     EDIT_FORM = 'EDIT_FORM',
     FORM = 'FORM',
+    FORM_RESULTS = 'FORM_RESULTS',
     NOT_FOUND = 'NOT_FOUND'
 }
 
@@ -39,13 +41,14 @@ export const RoutePathPrivate: Record<AppRoutesPrivate, string> = {
     [AppRoutesPrivate.MAIN]: '/',
     [AppRoutesPrivate.EDIT_FORM]: '/form/edit/',// + id
     [AppRoutesPrivate.FORM]: '/form/',// + id
+    [AppRoutesPrivate.FORM_RESULTS]: '/form/results/',// + id
     [AppRoutesPrivate.NOT_FOUND]: '*',
 };
 
 export const routeConfigPrivate: Record<AppRoutesPrivate, RouteProps> = {
     [AppRoutesPrivate.MAIN]: {
         path: RoutePathPrivate.MAIN,
-        element: <Main/>,
+        element: <MainPage/>,
     },
     [AppRoutesPrivate.NOT_FOUND]: {
         path: RoutePathPrivate.NOT_FOUND,
@@ -53,10 +56,14 @@ export const routeConfigPrivate: Record<AppRoutesPrivate, RouteProps> = {
     },
     [AppRoutesPrivate.EDIT_FORM]: {
         path: `${RoutePathPrivate.EDIT_FORM}:id`,
-        element: <FormAdmin/>,
+        element: <FormAdminPage/>,
     },
     [AppRoutesPrivate.FORM]: {
         path: `${RoutePathPrivate.FORM}:id`,
-        element: <Form/>,
+        element: <FormPage/>,
+    },
+    [AppRoutesPrivate.FORM_RESULTS]: {
+        path: `${RoutePathPrivate.FORM_RESULTS}:id`,
+        element: <FormResultsPage/>,
     },
 }
