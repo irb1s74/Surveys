@@ -28,8 +28,8 @@ export const QuestionEditorHeader: FC<QuestionHeaderProps> = ({type, setType, ti
     };
 
     return (
-        <Stack direction="row" sx={{mb: "20px"}} justifyContent="space-between">
-            <TextField sx={{flex:0.6}} label="Вопрос" value={title} onChange={handleChangeTitle}/>
+        <Stack direction="row" sx={{mb: "20px", width: "100%"}} justifyContent="space-between">
+            <TextField sx={{flex: 0.6}} label="Вопрос" value={title} onChange={handleChangeTitle}/>
             <Select
                 sx={{width: "252px", display: "flex"}}
                 open={open}

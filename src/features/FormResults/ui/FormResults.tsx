@@ -1,6 +1,6 @@
-import {FC, useEffect} from 'react';
+import {FC, Fragment, useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {Card, CardContent, IconButton, Stack, Typography} from "@mui/material";
+import {Card, CardContent, CardMedia, IconButton, Stack, Typography} from "@mui/material";
 import {formResultsReducer} from "../model/slice/formResultsSlice";
 import {DynamicModuleLoader, ReducersList} from "shared/lib/components/DynamicModuleLoader";
 import {getUserAuthData} from "entities/User";
@@ -15,6 +15,7 @@ import {IoDownload} from "react-icons/io5";
 import BarStats from "shared/ui/BarStats/BarStats";
 import PieStats from "shared/ui/PieStats/PieStats";
 import {replyToFormData} from "../lib/replyToStatsData";
+import {getUrl} from "shared/lib/getUrl/getUrl";
 
 
 interface EditFormAnswersProps {
@@ -76,12 +77,28 @@ const FormResults: FC<EditFormAnswersProps> = ({}) => {
                     {replyToFormData(reply, questions).map((statistic, index) => (
                         <Card key={index}>
                             <CardContent>
-                                <Typography variant="h5">{statistic.title}</Typography>
                                 <Stack sx={{width: "100%"}} direction="row" justifyContent="center" alignItems="center">
-                                    {statistic.type !== "checkbox" ? (
-                                        <PieStats data={statistic.data}/>
+                                    {statistic.type === "checkbox" ? (
+                                        <Fragment>
+                                            <Typography sx={{mb: '20px'}} variant="h5">{statistic.title}</Typography>
+                                            <BarStats data={statistic.data}/>
+                                        </Fragment>
+
+                                    ) : statistic.type === "image" ? (
+                                        <Stack direction="column" spacing={2} alignItems="center">
+                                            <CardMedia
+                                                component="img"
+                                                height="400"
+                                                image={`${getUrl}questions/${statistic.title}`}
+                                                sx={{mb: '20px'}}
+                                            />
+                                            <BarStats data={statistic.data}/>
+                                        </Stack>
                                     ) : (
-                                        <BarStats data={statistic.data}/>
+                                        <Fragment>
+                                            <Typography sx={{mb: '20px'}} variant="h5">{statistic.title}</Typography>
+                                            <PieStats data={statistic.data}/>
+                                        </Fragment>
                                     )}
                                 </Stack>
                             </CardContent>

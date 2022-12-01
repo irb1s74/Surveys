@@ -22,6 +22,7 @@ import {getFormById, Questions, Variants} from "entities/Form";
 import {QuestionEditor} from 'widgets/QuestionEditor';
 import {IoEye} from "react-icons/io5";
 import {PageLoader} from "widgets/PageLoader";
+import {updateImageQuestion} from "features/FormEditor/model/service/updateImageQuestion";
 
 interface EditFormProps {
 
@@ -45,6 +46,16 @@ const FormEditor: FC<EditFormProps> = ({}) => {
     const handleUpdateQuestion = useCallback((question: Questions) => {
         dispatch(updateQuestion({
             data: {questionId: question.id, title: question.title, type: question.type, required: question.required},
+            token: authData.token
+        }))
+    }, [])
+
+
+    const handleUpdateImageQuestion = useCallback((data: { questionId: string, files: any }) => {
+        console.log(data);
+        dispatch(updateImageQuestion({
+            questionId: data.questionId,
+            files: data.files,
             token: authData.token
         }))
     }, [])
@@ -118,6 +129,7 @@ const FormEditor: FC<EditFormProps> = ({}) => {
                             data={question}
                             onDelete={handleDeleteQuestion}
                             onUpdate={handleUpdateQuestion}
+                            onUpdateImage={handleUpdateImageQuestion}
                             onCreateVariant={handleCreateVariant}
                             onUpdateVariant={handleUpdateVariant}
                             onDeleteVariant={handleDeleteVariant}
