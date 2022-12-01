@@ -36,10 +36,10 @@ export const CardForm: FC<CardFormProps> = (props) => {
         dispatch(deleteForm({formId: data.id}))
     }
     const toEditForm = () => {
-        if (authData.role === "employee") {
-            navigate(`form/${data.id}`);
-        } else {
+        if (authData.role === "HR") {
             navigate(`form/edit/${data.id}`);
+        } else {
+            navigate(`form/${data.id}`);
         }
     }
     return (
@@ -58,26 +58,31 @@ export const CardForm: FC<CardFormProps> = (props) => {
                 </CardContent>
             </CardActionArea>
             <Divider/>
-            <CardActions sx={{justifyContent: "flex-end"}}>
-                <IconButton onClick={handleClick}>
-                    <IoEllipsisVerticalSharp/>
-                </IconButton>
-            </CardActions>
-            <Menu
-                anchorEl={anchorEl}
-                id="cardForm-menu"
-                open={open}
-                onClose={handleClose}
-                transformOrigin={{horizontal: 'center', vertical: 'top'}}
-                anchorOrigin={{horizontal: 'center', vertical: 'bottom'}}
-            >
-                <MenuItem onClick={handleDeleteForm}>
-                    <ListItemIcon>
-                        <IoTrash fontSize={22}/>
-                    </ListItemIcon>
-                    Удалить
-                </MenuItem>
-            </Menu>
+            {authData.role === "HR" && (
+                <>
+                    <CardActions sx={{justifyContent: "flex-end"}}>
+                        <IconButton onClick={handleClick}>
+                            <IoEllipsisVerticalSharp/>
+                        </IconButton>
+                    </CardActions>
+                    <Menu
+                        anchorEl={anchorEl}
+                        id="cardForm-menu"
+                        open={open}
+                        onClose={handleClose}
+                        transformOrigin={{horizontal: 'center', vertical: 'top'}}
+                        anchorOrigin={{horizontal: 'center', vertical: 'bottom'}}
+                    >
+                        <MenuItem onClick={handleDeleteForm}>
+                            <ListItemIcon>
+                                <IoTrash fontSize={22}/>
+                            </ListItemIcon>
+                            Удалить
+                        </MenuItem>
+                    </Menu>
+                </>
+            )}
+
         </Card>
     );
 };
