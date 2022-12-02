@@ -30,8 +30,8 @@ export const formEditorSlice = createSlice({
                 state.error = undefined;
             })
             .addCase(getFormById.fulfilled, (state, action) => {
-                state.isLoading = false;
                 state.form = action.payload;
+                state.isLoading = false;
             })
             .addCase(getFormById.rejected, (state, action) => {
                 state.isLoading = false;

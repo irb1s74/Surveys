@@ -1,8 +1,5 @@
 import {FC, useCallback, useEffect} from 'react';
-import {
-    Card, CardContent, Fab,
-    TextField,
-} from "@mui/material";
+import {Fab} from "@mui/material";
 import {IoImage, IoLogoYoutube, IoText, IoCheckbox} from "react-icons/io5";
 import {DialActions} from "widgets/DialActions";
 import {DynamicModuleLoader, ReducersList} from "shared/lib/components/DynamicModuleLoader";
@@ -16,13 +13,15 @@ import {getUserAuthData} from "entities/User";
 import {createQuestion} from "../model/service/createQuestion";
 import {deleteQuestion} from "../model/service/deleteQuestion";
 import {updateQuestion} from "../model/service/updateQuestion";
+import {updateForm} from "../model/service/updateForm";
 import {createVariant} from "features/FormEditor/model/service/createVariant";
 import {deleteVariant} from "features/FormEditor/model/service/deleteVariant";
-import {getFormById, Questions, Variants} from "entities/Form";
+import {Form, getFormById, Questions, Variants} from "entities/Form";
 import {QuestionEditor} from 'widgets/QuestionEditor';
 import {IoEye} from "react-icons/io5";
 import {PageLoader} from "widgets/PageLoader";
 import {updateImageQuestion} from "features/FormEditor/model/service/updateImageQuestion";
+import FormEditorHeader from "./FormEditorHeader";
 
 interface EditFormProps {
 
@@ -35,9 +34,17 @@ const initialReducers: ReducersList = {
 const FormEditor: FC<EditFormProps> = ({}) => {
     const dispatch = useDispatch();
     let {id} = useParams();
-    const {title, questions} = useSelector(getFormEditorFoundForm);
+    const form = useSelector(getFormEditorFoundForm);
     const authData = useSelector(getUserAuthData);
     const isLoading = useSelector(getFormEditorIsLoading);
+
+    useEffect(() => {
+        dispatch(getFormById({formId: id, token: authData.token}));
+    }, [id]);
+
+    const handleUpdateFrom = useCallback((form: Form) => {
+        dispatch(updateForm({data: {formId: form.id, title: form.title, date: form.date}, token: authData.token}))
+    }, [])
 
     const handleDeleteQuestion = useCallback((questionId: number) => () => {
         dispatch(deleteQuestion({questionId, token: authData.token}));
@@ -50,9 +57,7 @@ const FormEditor: FC<EditFormProps> = ({}) => {
         }))
     }, [])
 
-
     const handleUpdateImageQuestion = useCallback((data: { questionId: string, files: any }) => {
-        console.log(data);
         dispatch(updateImageQuestion({
             questionId: data.questionId,
             files: data.files,
@@ -109,21 +114,17 @@ const FormEditor: FC<EditFormProps> = ({}) => {
         },
     ];
 
-    useEffect(() => {
-        dispatch(getFormById({formId: id, token: authData.token}));
-    }, [id])
-
-
     return (
         <DynamicModuleLoader reducers={initialReducers}>
             {!isLoading ? (
                 <>
-                    <Card>
-                        <CardContent>
-                            <TextField fullWidth variant="standard" value={title} placeholder="Название формы"/>
-                        </CardContent>
-                    </Card>
-                    {questions && questions.map((question) => (
+                    {form &&
+                        <FormEditorHeader
+                            formData={form}
+                            onUpdate={handleUpdateFrom}
+                        />
+                    }
+                    {form.questions && form.questions.map((question) => (
                         <QuestionEditor
                             key={question.id}
                             data={question}

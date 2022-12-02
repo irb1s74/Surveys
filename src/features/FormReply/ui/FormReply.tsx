@@ -14,6 +14,8 @@ import {Question} from "widgets/Question";
 import {DynamicModuleLoader, ReducersList} from "shared/lib/components/DynamicModuleLoader";
 import {createYupSchema} from "shared/lib/createValidation/createValidation";
 import * as yup from "yup";
+import {Simulate} from "react-dom/test-utils";
+import error = Simulate.error;
 
 const initialReducers: ReducersList = {
     formReply: formReplyReducer
@@ -70,7 +72,7 @@ const FormReply = () => {
                             />
                         ))}
                         <Stack direction="row" alignItems="center" justifyContent="space-between">
-                            <Button type="submit" variant="contained">Отправить</Button>
+                            <Button type="submit" disabled={!formik.isValid} variant="contained">Отправить</Button>
                             <Button onClick={formik.handleReset}>Очистить форму</Button>
                         </Stack>
                     </Stack>

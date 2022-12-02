@@ -4,7 +4,8 @@ import {Reply} from "entities/Reply";
 export interface Form {
     id: number,
     title: string;
-    userId: number
+    userId: number;
+    date?: string;
     questions: Questions[] | undefined
     reply?: Reply[]
 }
