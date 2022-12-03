@@ -45,7 +45,11 @@ const LoginForm: FC<LoginFormProps> = ({setTypeAuth}) => {
                         <TextField fullWidth label="Email" type="email" value={email} onChange={onChangeEmail}/>
                         <TextField fullWidth label="Пароль" type="password" value={password}
                             onChange={onChangePassword}/>
-                        {error && (
+                        {Array.isArray(error) ? (
+                            <Typography color="error">
+                                {error[0]}
+                            </Typography>
+                        ) : (
                             <Typography color="error">
                                 {error}
                             </Typography>

@@ -11,7 +11,7 @@ interface RegProps {
     password: string;
 }
 
-export const regByEmail = createAsyncThunk<User, RegProps, { rejectValue: string }>(
+export const regByEmail = createAsyncThunk<User, RegProps, { rejectValue: string[] }>(
     'auth/regByEmail',
     async ({email, password, full_name}, thunkAPI) => {
         try {
@@ -30,7 +30,7 @@ export const regByEmail = createAsyncThunk<User, RegProps, { rejectValue: string
             thunkAPI.dispatch(userActions.setAuthData(response.data))
             return response.data
         } catch (e) {
-            return thunkAPI.rejectWithValue("Вы ввели неверный логин или пароль")
+            return thunkAPI.rejectWithValue(e.response.data.message)
         }
     }
 )

@@ -3,5 +3,5 @@ export interface AuthSchema {
     full_name: string;
     email:  string;
     password: string;
-    error?: string
+    error?: string[]
 }

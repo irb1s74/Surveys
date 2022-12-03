@@ -16,6 +16,7 @@ import BarStats from "shared/ui/BarStats/BarStats";
 import PieStats from "shared/ui/PieStats/PieStats";
 import {replyToFormData} from "../lib/replyToStatsData";
 import {getUrl} from "shared/lib/getUrl/getUrl";
+import {downLoadResults} from "features/FormResults/model/service/downLoadResults";
 
 
 interface EditFormAnswersProps {
@@ -56,6 +57,9 @@ const FormResults: FC<EditFormAnswersProps> = ({}) => {
         dispatch(getFormById({formId: id, token: authData.token}));
     }, [id])
 
+    const handleDownLoad = () => {
+        dispatch(downLoadResults({formId: id, token: authData.token}))
+    }
 
     return (
         <DynamicModuleLoader reducers={initialReducers}>
@@ -65,7 +69,7 @@ const FormResults: FC<EditFormAnswersProps> = ({}) => {
                         <CardContent>
                             <Stack direction="row" justifyContent="space-between" alignItems="center">
                                 <Typography variant="h5">{reply?.length || 0} ответов</Typography>
-                                <IconButton color="primary">
+                                <IconButton onClick={handleDownLoad} color="primary">
                                     <IoDownload/>
                                 </IconButton>
                             </Stack>

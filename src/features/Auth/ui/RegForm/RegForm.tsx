@@ -53,7 +53,11 @@ const RegForm: FC<RegFormProps> = ({setTypeAuth}) => {
                         <TextField fullWidth label="ФИО" value={full_name} onChange={onChangeFullName}/>
                         <TextField fullWidth label="Пароль" type="password" value={password}
                             onChange={onChangePassword}/>
-                        {error && (
+                        {Array.isArray(error) ? (
+                            <Typography color="error">
+                                {error[0]}
+                            </Typography>
+                        ) : (
                             <Typography color="error">
                                 {error}
                             </Typography>
