@@ -26,12 +26,6 @@ const initialReducers: ReducersList = {
     formResults: formResultsReducer
 }
 
-interface DataStatistic {
-    title: string
-    data: { name: string, value: number }[]
-    type: string
-}
-
 
 const FormResults: FC<EditFormAnswersProps> = ({}) => {
     let {id} = useParams();

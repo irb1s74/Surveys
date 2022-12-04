@@ -14,8 +14,6 @@ import {Question} from "widgets/Question";
 import {DynamicModuleLoader, ReducersList} from "shared/lib/components/DynamicModuleLoader";
 import {createYupSchema} from "shared/lib/createValidation/createValidation";
 import * as yup from "yup";
-import {Simulate} from "react-dom/test-utils";
-import error = Simulate.error;
 
 const initialReducers: ReducersList = {
     formReply: formReplyReducer

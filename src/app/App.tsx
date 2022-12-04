@@ -2,7 +2,8 @@ import {Suspense, useLayoutEffect} from 'react';
 import {Navbar} from "widgets/Navbar";
 import {AppRouter} from "app/providers/router";
 import {useDispatch} from "react-redux";
-import {authByToken} from "entities/User/model/service/authByToken";
+import {authByToken} from "entities/User";
+import {PageLoader} from "widgets/PageLoader";
 
 const App = () => {
     const dispatch = useDispatch();
@@ -10,8 +11,9 @@ const App = () => {
     useLayoutEffect(() => {
         dispatch(authByToken())
     }, [dispatch])
+
     return (
-        <Suspense fallback="">
+        <Suspense fallback={<PageLoader/>}>
             <Navbar/>
             <AppRouter/>
         </Suspense>

@@ -1,6 +1,8 @@
 export {
     getUserAuthData,
 } from './model/selectors/getUserAuthData/getUserAuthData';
+
+export {authByToken} from './model/service/authByToken'
 export {
     userReducer,
     userActions,

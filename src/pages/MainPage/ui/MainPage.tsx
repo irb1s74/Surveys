@@ -3,7 +3,7 @@ import {Container, Grid} from "@mui/material";
 import {CardAddForm} from "widgets/CardAddForm";
 import {CardForm} from "widgets/CardForm";
 import {AddFormModal} from "features/AddForm";
-import {Form, getFormForms, getForms} from "entities/Form";
+import {getFormForms, getForms} from "entities/Form";
 import {useDispatch, useSelector} from "react-redux";
 import {getUserAuthData} from "entities/User";
 

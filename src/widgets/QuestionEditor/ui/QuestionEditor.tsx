@@ -3,7 +3,7 @@ import {
     Button,
     Card,
     CardActions,
-    CardContent,
+    CardContent, CardMedia,
     Divider,
     FormControlLabel,
     IconButton,
@@ -38,7 +38,7 @@ const QuestionEditor = ({
     onUpdateVariant
 }: QuestionEditorProps) => {
     const [question, setQuestion] = useState(data);
-    const [questionImage, setQuestionImage] = useState(`${getUrl}questions/${data.title}`);
+    const [questionImage, setQuestionImage] = useState(data.title && `${getUrl}questions/${data.title}`);
     const fileImageRef = useRef(document.createElement("input")) as MutableRefObject<HTMLInputElement>;
     const debouncedValue = useDebounce(question, 650)
     const isChanged = useRef(false);
@@ -116,16 +116,16 @@ const QuestionEditor = ({
                     ) : question.type === "image" ? (
                         <Stack direction="column" sx={{width: "100%"}} spacing={1} alignItems="center">
                             <Stack sx={{width: "100%"}} direction="row" spacing={2} justifyContent="flex-end">
-                                <IconButton onClick={handleOpenInput}>
+                                <IconButton onClick={handleOpenInput} color="secondary">
                                     <IoPencil/>
                                 </IconButton>
                             </Stack>
                             {questionImage && (
-                                <img
-                                    height={400}
-                                    width={600}
-                                    alt={'loadFile'}
-                                    src={questionImage}
+                                <CardMedia
+                                    component="img"
+                                    height="580"
+                                    alt="load Image"
+                                    image={questionImage}
                                 />
                             )}
                             <input

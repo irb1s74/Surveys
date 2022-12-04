@@ -1,7 +1,8 @@
 import {Fragment, memo} from 'react';
 import {
     Card,
-    CardContent, CardHeader, CardMedia,
+    CardContent,
+    CardMedia,
     Stack,
     TextField, Typography,
 } from "@mui/material";
@@ -30,8 +31,12 @@ const Question = ({
                 <Stack direction="column">
                     {data.type === "radio" || data.type === "checkbox" ? (
                         <Fragment>
-                            <Typography sx={{mb: '20px'}}
-                                variant="h5">{`${data.title || ""} ${data.required && "*"}`}</Typography>
+                            <Stack direction="row">
+                                <Typography sx={{mb: '20px'}} variant="h5">{data.title}</Typography>
+                                {data.required && (
+                                    <Typography sx={{mb: '20px'}} color="error" variant="h5">*</Typography>
+                                )}
+                            </Stack>
                             {data.variants && data.variants.map((variant) => (
                                 <Variant
                                     key={variant.id}
@@ -46,8 +51,12 @@ const Question = ({
 
                     ) : data.type === "text" ? (
                         <Fragment>
-                            <Typography sx={{mb: '20px'}}
-                                variant="h5">{`${data.title || ""} ${data.required && "*"}`}</Typography>
+                            <Stack direction="row">
+                                <Typography sx={{mb: '20px'}} variant="h5">{data.title}</Typography>
+                                {data.required && (
+                                    <Typography sx={{mb: '20px'}} color="error" variant="h5">*</Typography>
+                                )}
+                            </Stack>
                             <TextField
                                 name={`${data.id}`}
                                 value={value}
@@ -58,13 +67,15 @@ const Question = ({
                         </Fragment>
                     ) : data.type === "image" ? (
                         <Fragment>
-                            <CardMedia
-                                component="img"
-                                height="400"
-                                image={`${getUrl}questions/${data.title}`}
-                                alt={`${data.id}`}
-                                sx={{mb: '20px'}}
-                            />
+                            {data.title && (
+                                <CardMedia
+                                    component="img"
+                                    height="400"
+                                    image={`${getUrl}questions/${data.title}`}
+                                    alt={`${data.id}`}
+                                    sx={{mb: '20px'}}
+                                />
+                            )}
                             <TextField
                                 name={`${data.id}`}
                                 value={value}
