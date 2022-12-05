@@ -15,7 +15,6 @@ export const QuestionEditorHeader: FC<QuestionHeaderProps> = ({type, setType, ti
         setType(event.target.value);
     };
     const handleChangeTitle = (event: ChangeEvent<HTMLInputElement>) => {
-        console.log(event.target.value)
         setTitle(event.target.value);
     }
 

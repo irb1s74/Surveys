@@ -77,11 +77,10 @@ const FormResults: FC<EditFormAnswersProps> = ({}) => {
                             <CardContent>
                                 <Stack sx={{width: "100%"}} direction="row" justifyContent="center" alignItems="center">
                                     {statistic.type === "checkbox" ? (
-                                        <Fragment>
+                                        <Stack direction="column" spacing={2} alignItems="center">
                                             <Typography sx={{mb: '20px'}} variant="h5">{statistic.title}</Typography>
                                             <BarStats data={statistic.data}/>
-                                        </Fragment>
-
+                                        </Stack>
                                     ) : statistic.type === "image" ? (
                                         <Stack direction="column" spacing={2} alignItems="center">
                                             <CardMedia
@@ -93,10 +92,10 @@ const FormResults: FC<EditFormAnswersProps> = ({}) => {
                                             <BarStats data={statistic.data}/>
                                         </Stack>
                                     ) : (
-                                        <Fragment>
+                                        <Stack direction="column" alignItems="center">
                                             <Typography sx={{mb: '20px'}} variant="h5">{statistic.title}</Typography>
                                             <PieStats data={statistic.data}/>
-                                        </Fragment>
+                                        </Stack>
                                     )}
                                 </Stack>
                             </CardContent>

@@ -13,7 +13,6 @@ export const updateImageQuestion = createAsyncThunk<Form, updateImageQuestionPro
     "form/updateImageQuestion",
     async ({token, files, questionId}, thunkAPI) => {
         try {
-            console.log("ale2")
             let formData = new FormData();
             for (let i = 0, file; i < files.length; i++) {
                 file = files.item(i);

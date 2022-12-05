@@ -28,66 +28,63 @@ const Question = ({
     return (
         <Card>
             <CardContent>
-                <Stack direction="column">
-                    {data.type === "radio" || data.type === "checkbox" ? (
-                        <Fragment>
-                            <Stack direction="row">
-                                <Typography sx={{mb: '20px'}} variant="h5">{data.title}</Typography>
-                                {data.required && (
-                                    <Typography sx={{mb: '20px'}} color="error" variant="h5">*</Typography>
-                                )}
-                            </Stack>
-                            {data.variants && data.variants.map((variant) => (
-                                <Variant
-                                    key={variant.id}
-                                    variant={variant}
-                                    type={data.type}
-                                    editor={false}
-                                    onChange={handleChange}
-                                    value={value}
-                                />
-                            ))}
-                        </Fragment>
-
-                    ) : data.type === "text" ? (
-                        <Fragment>
-                            <Stack direction="row">
-                                <Typography sx={{mb: '20px'}} variant="h5">{data.title}</Typography>
-                                {data.required && (
-                                    <Typography sx={{mb: '20px'}} color="error" variant="h5">*</Typography>
-                                )}
-                            </Stack>
-                            <TextField
-                                name={`${data.id}`}
-                                value={value}
-                                onChange={handleChange}
-                                label="Мой Ответ"
-                                fullWidth
-                            />
-                        </Fragment>
-                    ) : data.type === "image" ? (
-                        <Fragment>
-                            {data.title && (
-                                <CardMedia
-                                    component="img"
-                                    height="400"
-                                    image={`${getUrl}questions/${data.title}`}
-                                    alt={`${data.id}`}
-                                    sx={{mb: '20px'}}
-                                />
+                {data.type === "radio" || data.type === "checkbox" ? (
+                    <Stack direction="column">
+                        <Stack direction="row">
+                            <Typography sx={{mb: '20px'}} variant="h5">{data.title}</Typography>
+                            {data.required && (
+                                <Typography sx={{mb: '20px'}} color="error" variant="h5">*</Typography>
                             )}
-                            <TextField
-                                name={`${data.id}`}
-                                value={value}
+                        </Stack>
+                        {data.variants && data.variants.map((variant) => (
+                            <Variant
+                                key={variant.id}
+                                variant={variant}
+                                type={data.type}
+                                editor={false}
                                 onChange={handleChange}
-                                label="Мой Ответ"
-                                fullWidth
+                                value={value}
                             />
-                        </Fragment>
-                    ) : (
-                        <div/>
-                    )}
-                </Stack>
+                        ))}
+                    </Stack>
+                ) : data.type === "text" ? (
+                    <Stack direction="column">
+                        <Stack direction="row">
+                            <Typography sx={{mb: '20px'}} variant="h5">{data.title}</Typography>
+                            {data.required && (
+                                <Typography sx={{mb: '20px'}} color="error" variant="h5">*</Typography>
+                            )}
+                        </Stack>
+                        <TextField
+                            name={`${data.id}`}
+                            value={value}
+                            onChange={handleChange}
+                            label="Мой Ответ"
+                            fullWidth
+                        />
+                    </Stack>
+                ) : data.type === "image" ? (
+                    <Stack direction="column">
+                        {data.title && (
+                            <CardMedia
+                                component="img"
+                                height="400"
+                                image={`${getUrl}questions/${data.title}`}
+                                alt={`${data.id}`}
+                                sx={{mb: '20px'}}
+                            />
+                        )}
+                        <TextField
+                            name={`${data.id}`}
+                            value={value}
+                            onChange={handleChange}
+                            label="Мой Ответ"
+                            fullWidth
+                        />
+                    </Stack>
+                ) : (
+                    <div/>
+                )}
                 {error && (
                     <Typography color="error">{error}</Typography>
                 )}

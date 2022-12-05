@@ -31,7 +31,6 @@ export const loginByEmail = createAsyncThunk<User, LoginProps, { rejectValue: st
 
             return response.data
         } catch (e) {
-            console.log(e.response)
             return thunkAPI.rejectWithValue(e.response.data.message)
         }
     }
