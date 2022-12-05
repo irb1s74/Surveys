@@ -9,6 +9,7 @@ import {
 import {Questions} from "entities/Form";
 import Variant from "shared/ui/Variant/Variant";
 import {getUrl} from "shared/lib/getUrl/getUrl";
+import ReactPlayer from "react-player/lazy";
 
 
 interface QuestionEditorProps {
@@ -82,7 +83,27 @@ const Question = ({
                             fullWidth
                         />
                     </Stack>
-                ) : (
+                ) : data.type === "video" ? (
+                    <Stack direction="column">
+                        {data.title && (
+                            <ReactPlayer
+                                className='react-player'
+                                url={`${data.title}`}
+                                width='100%'
+                                height='600px'
+                                volume={0.1}
+                            />
+                        )}
+                        <TextField
+                            name={`${data.id}`}
+                            sx={{mt: '20px'}}
+                            value={value}
+                            onChange={handleChange}
+                            label="Мой Ответ"
+                            fullWidth
+                        />
+                    </Stack>
+                ): (
                     <div/>
                 )}
                 {error && (

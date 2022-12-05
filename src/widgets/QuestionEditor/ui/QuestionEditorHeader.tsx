@@ -1,14 +1,16 @@
 import {ChangeEvent, FC, useState} from 'react';
-import {MenuItem, Select, SelectChangeEvent, Stack, TextField} from "@mui/material";
+import {Button, IconButton, MenuItem, Select, SelectChangeEvent, Stack, TextField} from "@mui/material";
+import {IoPencil} from "react-icons/io5";
 
 interface QuestionHeaderProps {
     title: string;
     type: string;
     setTitle: (title: string) => void;
     setType: (type: string) => void;
+    handleOpenInput: () => void
 }
 
-export const QuestionEditorHeader: FC<QuestionHeaderProps> = ({type, setType, title, setTitle}) => {
+export const QuestionEditorHeader: FC<QuestionHeaderProps> = ({type, setType, title, setTitle, handleOpenInput}) => {
     const [open, setOpen] = useState(false);
 
     const handleChangeType = (event: SelectChangeEvent) => {
@@ -26,9 +28,18 @@ export const QuestionEditorHeader: FC<QuestionHeaderProps> = ({type, setType, ti
         setOpen(true);
     };
 
+
     return (
         <Stack direction="row" sx={{mb: "20px", width: "100%"}} justifyContent="space-between">
-            <TextField sx={{flex: 0.6}} label="Вопрос" value={title} onChange={handleChangeTitle}/>
+            {type === "video" ? (
+                <TextField sx={{flex: 0.6}} label="Ссылка на видео" value={title} onChange={handleChangeTitle}/>
+            ) : type === "image" ? (
+                <Button size="small" variant="contained" onClick={handleOpenInput} color="secondary">
+                    Выбрать изображение
+                </Button>
+            ) : (
+                <TextField sx={{flex: 0.6}} label="Вопрос" value={title} onChange={handleChangeTitle}/>
+            )}
             <Select
                 sx={{width: "252px", display: "flex"}}
                 open={open}

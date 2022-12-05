@@ -48,6 +48,7 @@ const FormReply = () => {
             navigate(`/form/results/${id}`);
         },
     });
+    formik.isValid = false;
 
     return (
         <DynamicModuleLoader reducers={initialReducers}>

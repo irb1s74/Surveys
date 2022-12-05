@@ -17,6 +17,8 @@ import Variant from "shared/ui/Variant/Variant";
 import useDebounce from "shared/lib/useDebounce/useDebounce";
 import {getUrl} from "shared/lib/getUrl/getUrl";
 import {IoPencil} from "react-icons/io5";
+import ReactPlayer from 'react-player/lazy'
+
 
 interface QuestionEditorProps {
     data: Questions,
@@ -64,6 +66,7 @@ const QuestionEditor = ({
         setQuestion({...question, required: event.target.checked});
     }
 
+
     const handleOpenInput = () => {
         fileImageRef.current.click();
     }
@@ -90,6 +93,7 @@ const QuestionEditor = ({
                                 type={question.type}
                                 setTitle={handleSetTitle}
                                 setType={handleSetType}
+                                handleOpenInput={handleOpenInput}
                             />
                             {data.variants && data.variants.map((variant) => (
                                 <Variant
@@ -109,17 +113,20 @@ const QuestionEditor = ({
                                 type={question.type}
                                 setTitle={handleSetTitle}
                                 setType={handleSetType}
+                                handleOpenInput={handleOpenInput}
                             />
                             <TextField label="Ответ" fullWidth disabled/>
                         </Fragment>
 
                     ) : question.type === "image" ? (
                         <Stack direction="column" sx={{width: "100%"}} spacing={1} alignItems="center">
-                            <Stack sx={{width: "100%"}} direction="row" spacing={2} justifyContent="flex-end">
-                                <IconButton onClick={handleOpenInput} color="secondary">
-                                    <IoPencil/>
-                                </IconButton>
-                            </Stack>
+                            <QuestionEditorHeader
+                                title={question.title}
+                                type={question.type}
+                                setTitle={handleSetTitle}
+                                setType={handleSetType}
+                                handleOpenInput={handleOpenInput}
+                            />
                             {questionImage && (
                                 <CardMedia
                                     component="img"
@@ -132,6 +139,33 @@ const QuestionEditor = ({
                                 ref={fileImageRef}
                                 type='file'
                                 accept=".jpeg, .jpg, .png, .gif"
+                                onChange={handleChangeImage}
+                                hidden
+                            />
+                            <TextField label="Ответ" fullWidth disabled/>
+                        </Stack>
+                    ) : question.type === "video" ? (
+                        <Stack direction="column" sx={{width: "100%"}} spacing={1} alignItems="center">
+                            <QuestionEditorHeader
+                                title={question.title}
+                                type={question.type}
+                                setTitle={handleSetTitle}
+                                setType={handleSetType}
+                                handleOpenInput={handleOpenInput}
+                            />
+                            {question.title && (
+                                <ReactPlayer
+                                    className='react-player'
+                                    url={`${data.title}`}
+                                    width='100%'
+                                    height='600px'
+                                    volume={0.1}
+                                />
+                            )}
+                            <input
+                                ref={fileImageRef}
+                                type='file'
+                                accept=".mp4"
                                 onChange={handleChangeImage}
                                 hidden
                             />

@@ -118,7 +118,7 @@ const FormEditor: FC<EditFormProps> = ({}) => {
         <DynamicModuleLoader reducers={initialReducers}>
             {!isLoading ? (
                 <>
-                    {form &&
+                    {form.title &&
                         <FormEditorHeader
                             formData={form}
                             onUpdate={handleUpdateFrom}
