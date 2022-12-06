@@ -66,6 +66,9 @@ const Question = ({
                     </Stack>
                 ) : data.type === "image" ? (
                     <Stack direction="column">
+                        {data.required && (
+                            <Typography sx={{mb: '20px'}} color="error" variant="h5">*</Typography>
+                        )}
                         {data.title && (
                             <CardMedia
                                 component="img"
@@ -85,6 +88,9 @@ const Question = ({
                     </Stack>
                 ) : data.type === "video" ? (
                     <Stack direction="column">
+                        {data.required && (
+                            <Typography sx={{mb: '20px'}} color="error" variant="h5">*</Typography>
+                        )}
                         {data.title && (
                             <ReactPlayer
                                 className='react-player'

@@ -3,6 +3,7 @@ import {FormEditorSchema} from "../../model/types/formEditorSchema";
 import {createQuestion} from "../service/createQuestion";
 import {createVariant} from "../service/createVariant";
 import {getFormById} from "entities/Form";
+import {publishForm} from "features/FormEditor/model/service/publishForm";
 
 const initialState: FormEditorSchema = {
     form: undefined,
@@ -43,7 +44,9 @@ export const formEditorSlice = createSlice({
             .addCase(createVariant.fulfilled, (state, action) => {
                 state.form = action.payload;
             })
-
+            .addCase(publishForm.fulfilled, (state, action) => {
+                state.form = action.payload
+            })
     }
 })
 

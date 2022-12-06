@@ -14,6 +14,7 @@ import {Question} from "widgets/Question";
 import {DynamicModuleLoader, ReducersList} from "shared/lib/components/DynamicModuleLoader";
 import {createYupSchema} from "shared/lib/createValidation/createValidation";
 import * as yup from "yup";
+import {PageLoader} from "widgets/PageLoader";
 
 const initialReducers: ReducersList = {
     formReply: formReplyReducer
@@ -27,6 +28,7 @@ const FormReply = () => {
     const form = useSelector(getFormReplyFoundForm)
     const reply = useSelector(getFormReplyFoundReply)
     const navigate = useNavigate();
+
     useEffect(() => {
         if (id) {
             dispatch(findOreCreateReply({formId: id, token: authData.token}));
@@ -43,16 +45,16 @@ const FormReply = () => {
     const formik = useFormik({
         initialValues: initialValues,
         validationSchema: validateSchema,
+        isInitialValid: false,
         onSubmit: (values) => {
             dispatch(saveReply({replyId: reply.id, token: authData.token, answers: values}))
             navigate(`/form/results/${id}`);
         },
     });
-    formik.isValid = false;
 
     return (
         <DynamicModuleLoader reducers={initialReducers}>
-            {!isLoading && (
+            {!isLoading ? (
                 <form onSubmit={formik.handleSubmit}>
                     <Stack direction='column' sx={{pt: "10px", pb: "10px"}} spacing={2}>
                         <Card>
@@ -70,13 +72,13 @@ const FormReply = () => {
                                 handleChange={formik.handleChange}
                             />
                         ))}
-                        <Stack direction="row" alignItems="center" justifyContent="space-between">
-                            <Button type="submit" disabled={!formik.isValid} variant="contained">Отправить</Button>
-                            <Button onClick={formik.handleReset}>Очистить форму</Button>
+                        <Stack direction="row" alignItems="center" justifyContent="flex-end">
+                            <Button disabled={!formik.isValid} type="submit" variant="contained">Отправить</Button>
+                            {/*<Button onClick={formik.handleReset}>Очистить форму</Button>*/}
                         </Stack>
                     </Stack>
                 </form>
-            )}
+            ) : (<PageLoader/>)}
         </DynamicModuleLoader>
     );
 };

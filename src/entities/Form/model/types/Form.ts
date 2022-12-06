@@ -6,6 +6,7 @@ export interface Form {
     title: string;
     userId: number;
     date?: string;
+    published: boolean;
     questions: Questions[] | undefined
     reply?: Reply[]
 }

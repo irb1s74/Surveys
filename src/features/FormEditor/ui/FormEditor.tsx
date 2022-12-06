@@ -1,5 +1,5 @@
 import {FC, useCallback, useEffect} from 'react';
-import {Fab} from "@mui/material";
+import {Button, Fab} from "@mui/material";
 import {IoImage, IoLogoYoutube, IoText, IoCheckbox} from "react-icons/io5";
 import {DialActions} from "widgets/DialActions";
 import {DynamicModuleLoader, ReducersList} from "shared/lib/components/DynamicModuleLoader";
@@ -22,6 +22,7 @@ import {IoEye} from "react-icons/io5";
 import {PageLoader} from "widgets/PageLoader";
 import {updateImageQuestion} from "features/FormEditor/model/service/updateImageQuestion";
 import FormEditorHeader from "./FormEditorHeader";
+import {publishForm} from "features/FormEditor/model/service/publishForm";
 
 interface EditFormProps {
 
@@ -45,6 +46,10 @@ const FormEditor: FC<EditFormProps> = ({}) => {
     const handleUpdateFrom = useCallback((form: Form) => {
         dispatch(updateForm({data: {formId: form.id, title: form.title, date: form.date}, token: authData.token}))
     }, [])
+
+    const handlePublishForm = useCallback(() => {
+        dispatch(publishForm({formId: form.id, token: authData.token}))
+    }, [form])
 
     const handleDeleteQuestion = useCallback((questionId: number) => () => {
         dispatch(deleteQuestion({questionId, token: authData.token}));
@@ -136,6 +141,8 @@ const FormEditor: FC<EditFormProps> = ({}) => {
                             onDeleteVariant={handleDeleteVariant}
                         />
                     ))}
+                    <Button variant="contained" onClick={handlePublishForm}
+                        color="secondary">{form.published ? "В черновик" : "Опубликовать"}</Button>
                     <Link to={`/form/${id}`}>
                         <Fab sx={{position: 'fixed', bottom: 86, right: 16}} color="secondary">
                             <IoEye size={20}/>

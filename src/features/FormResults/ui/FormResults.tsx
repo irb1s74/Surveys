@@ -1,6 +1,6 @@
 import {FC, Fragment, useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {Card, CardContent, CardMedia, IconButton, Stack, Typography} from "@mui/material";
+import {Card, CardContent, CardHeader, CardMedia, IconButton, Stack, Typography} from "@mui/material";
 import {formResultsReducer} from "../model/slice/formResultsSlice";
 import {DynamicModuleLoader, ReducersList} from "shared/lib/components/DynamicModuleLoader";
 import {getUserAuthData} from "entities/User";
@@ -17,6 +17,7 @@ import PieStats from "shared/ui/PieStats/PieStats";
 import {replyToFormData} from "../lib/replyToStatsData";
 import {getUrl} from "shared/lib/getUrl/getUrl";
 import {downLoadResults} from "features/FormResults/model/service/downLoadResults";
+import ReactPlayer from "react-player/lazy";
 
 
 interface EditFormAnswersProps {
@@ -74,6 +75,7 @@ const FormResults: FC<EditFormAnswersProps> = ({}) => {
                     </Card>
                     {replyToFormData(reply, questions).map((statistic, index) => (
                         <Card key={index}>
+                            {/*<CardHeader title={statistic.title}/>*/}
                             <CardContent>
                                 <Stack sx={{width: "100%"}} direction="row" justifyContent="center" alignItems="center">
                                     {statistic.type === "checkbox" ? (
@@ -89,6 +91,19 @@ const FormResults: FC<EditFormAnswersProps> = ({}) => {
                                                 image={`${getUrl}questions/${statistic.title}`}
                                                 sx={{mb: '20px'}}
                                             />
+                                            <BarStats data={statistic.data}/>
+                                        </Stack>
+                                    ) : statistic.type === "video" ? (
+                                        <Stack direction="column" spacing={2} alignItems="center">
+                                            {statistic.title && (
+                                                <ReactPlayer
+                                                    className='react-player'
+                                                    url={`${statistic.title}`}
+                                                    width='100%'
+                                                    height='600px'
+                                                    volume={0.1}
+                                                />
+                                            )}
                                             <BarStats data={statistic.data}/>
                                         </Stack>
                                     ) : (
