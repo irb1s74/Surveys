@@ -9,7 +9,7 @@ import {
     Typography
 } from "@mui/material";
 import {deleteForm, Form} from "entities/Form";
-import {IoEllipsisVerticalSharp, IoTrash} from "react-icons/io5";
+import {IoEllipsisVerticalSharp, IoTrash, IoPodium} from "react-icons/io5";
 import {useNavigate} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {getUserAuthData} from "entities/User";
@@ -32,6 +32,10 @@ export const CardForm: FC<CardFormProps> = (props) => {
     };
     const dispatch = useDispatch();
 
+    const handleToResults = () => {
+        navigate(`/form/results/${data.id}`);
+    }
+
     const handleDeleteForm = () => {
         dispatch(deleteForm({formId: data.id}))
     }
@@ -42,6 +46,7 @@ export const CardForm: FC<CardFormProps> = (props) => {
             navigate(`form/${data.id}`);
         }
     }
+    const valid = data.date ? new Date() < new Date(data.date) : true;
     return (
         <Card sx={{
             maxHeight: "220px",
@@ -55,6 +60,10 @@ export const CardForm: FC<CardFormProps> = (props) => {
                     <Typography gutterBottom variant="h5" component="div">
                         {data?.title}
                     </Typography>
+                    {!valid && (
+
+                        <Typography color="error">Форма просрочена </Typography>
+                    )}
                 </CardContent>
             </CardActionArea>
             <Divider/>
@@ -73,6 +82,12 @@ export const CardForm: FC<CardFormProps> = (props) => {
                         transformOrigin={{horizontal: 'center', vertical: 'top'}}
                         anchorOrigin={{horizontal: 'center', vertical: 'bottom'}}
                     >
+                        <MenuItem onClick={handleToResults}>
+                            <ListItemIcon>
+                                <IoPodium fontSize={22}/>
+                            </ListItemIcon>
+                            Результаты
+                        </MenuItem>
                         <MenuItem onClick={handleDeleteForm}>
                             <ListItemIcon>
                                 <IoTrash fontSize={22}/>
