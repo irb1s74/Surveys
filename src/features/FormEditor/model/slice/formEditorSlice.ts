@@ -4,6 +4,7 @@ import {createQuestion} from "../service/createQuestion";
 import {createVariant} from "../service/createVariant";
 import {getFormById} from "entities/Form";
 import {publishForm} from "features/FormEditor/model/service/publishForm";
+import {updateVideoQuestion} from "features/FormEditor/model/service/updateVideoQuestion";
 
 const initialState: FormEditorSchema = {
     form: undefined,

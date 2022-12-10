@@ -1,4 +1,4 @@
-import {Fragment, memo} from 'react';
+import {memo} from 'react';
 import {
     Card,
     CardContent,
@@ -9,7 +9,7 @@ import {
 import {Questions} from "entities/Form";
 import Variant from "shared/ui/Variant/Variant";
 import {getUrl} from "shared/lib/getUrl/getUrl";
-import ReactPlayer from "react-player/lazy";
+import {Player} from "widgets/Player";
 
 
 interface QuestionEditorProps {
@@ -92,12 +92,8 @@ const Question = ({
                             <Typography sx={{mb: '20px'}} color="error" variant="h5">*</Typography>
                         )}
                         {data.title && (
-                            <ReactPlayer
-                                className='react-player'
-                                url={`${data.title}`}
-                                width='100%'
-                                height='600px'
-                                volume={0.1}
+                            <Player
+                                src={`http://localhost:5000/questions/stream/${data.title}`}
                             />
                         )}
                         <TextField
@@ -109,7 +105,7 @@ const Question = ({
                             fullWidth
                         />
                     </Stack>
-                ): (
+                ) : (
                     <div/>
                 )}
                 {error && (

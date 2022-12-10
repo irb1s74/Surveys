@@ -16,8 +16,7 @@ import {Questions, Variants} from "entities/Form";
 import Variant from "shared/ui/Variant/Variant";
 import useDebounce from "shared/lib/useDebounce/useDebounce";
 import {getUrl} from "shared/lib/getUrl/getUrl";
-import {IoPencil} from "react-icons/io5";
-import ReactPlayer from 'react-player/lazy'
+import {Player} from "widgets/Player";
 
 
 interface QuestionEditorProps {
@@ -25,6 +24,7 @@ interface QuestionEditorProps {
     onDelete?: (questionId: number) => () => void;
     onUpdate?: (question: Questions) => void;
     onUpdateImage?: (data: { questionId: string, files: any }) => void;
+    onUpdateVideo?: (data: { questionId: string, files: any }) => void;
     onUpdateVariant?: (variant: Variants) => void;
     onCreateVariant?: (questionId: number) => void;
     onDeleteVariant?: (variantId: number, questionId: number,) => void;
@@ -35,6 +35,7 @@ const QuestionEditor = ({
     onDelete,
     onUpdate,
     onUpdateImage,
+    onUpdateVideo,
     onCreateVariant,
     onDeleteVariant,
     onUpdateVariant
@@ -79,6 +80,12 @@ const QuestionEditor = ({
         if (fileImageRef.current.files) {
             setQuestionImage(URL.createObjectURL(fileImageRef.current.files[0]))
             onUpdateImage({questionId: `${question.id}`, files: fileImageRef.current.files})
+        }
+    }
+    const handleChangeVideo = () => {
+        if (fileImageRef.current.files) {
+            setQuestionImage(URL.createObjectURL(fileImageRef.current.files[0]))
+            onUpdateVideo({questionId: `${question.id}`, files: fileImageRef.current.files})
         }
     }
 
@@ -154,19 +161,15 @@ const QuestionEditor = ({
                                 handleOpenInput={handleOpenInput}
                             />
                             {question.title && (
-                                <ReactPlayer
-                                    className='react-player'
-                                    url={`${data.title}`}
-                                    width='100%'
-                                    height='600px'
-                                    volume={0.1}
+                                <Player
+                                    src={`http://localhost:5000/questions/stream/${question.title}`}
                                 />
                             )}
                             <input
                                 ref={fileImageRef}
                                 type='file'
                                 accept=".mp4"
-                                onChange={handleChangeImage}
+                                onChange={handleChangeVideo}
                                 hidden
                             />
                             <TextField label="Ответ" fullWidth disabled/>

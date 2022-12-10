@@ -21,8 +21,9 @@ import {QuestionEditor} from 'widgets/QuestionEditor';
 import {IoEye} from "react-icons/io5";
 import {PageLoader} from "widgets/PageLoader";
 import {updateImageQuestion} from "features/FormEditor/model/service/updateImageQuestion";
+import {updateVideoQuestion} from "../model/service/updateVideoQuestion";
+import {publishForm} from "../model/service/publishForm";
 import FormEditorHeader from "./FormEditorHeader";
-import {publishForm} from "features/FormEditor/model/service/publishForm";
 
 interface EditFormProps {
 
@@ -64,6 +65,14 @@ const FormEditor: FC<EditFormProps> = ({}) => {
 
     const handleUpdateImageQuestion = useCallback((data: { questionId: string, files: any }) => {
         dispatch(updateImageQuestion({
+            questionId: data.questionId,
+            files: data.files,
+            token: authData.token
+        }))
+    }, [])
+
+    const handleUpdateVideoQuestion = useCallback((data: { questionId: string, files: any }) => {
+        dispatch(updateVideoQuestion({
             questionId: data.questionId,
             files: data.files,
             token: authData.token
@@ -136,6 +145,7 @@ const FormEditor: FC<EditFormProps> = ({}) => {
                             onDelete={handleDeleteQuestion}
                             onUpdate={handleUpdateQuestion}
                             onUpdateImage={handleUpdateImageQuestion}
+                            onUpdateVideo={handleUpdateVideoQuestion}
                             onCreateVariant={handleCreateVariant}
                             onUpdateVariant={handleUpdateVariant}
                             onDeleteVariant={handleDeleteVariant}

@@ -1,6 +1,5 @@
 import {ChangeEvent, FC, useState} from 'react';
-import {Button, IconButton, MenuItem, Select, SelectChangeEvent, Stack, TextField} from "@mui/material";
-import {IoPencil} from "react-icons/io5";
+import {Button, MenuItem, Select, SelectChangeEvent, Stack, TextField} from "@mui/material";
 
 interface QuestionHeaderProps {
     title: string;
@@ -32,7 +31,9 @@ export const QuestionEditorHeader: FC<QuestionHeaderProps> = ({type, setType, ti
     return (
         <Stack direction="row" sx={{mb: "20px", width: "100%"}} justifyContent="space-between">
             {type === "video" ? (
-                <TextField sx={{flex: 0.6}} label="Ссылка на видео" value={title} onChange={handleChangeTitle}/>
+                <Button size="small" variant="contained" onClick={handleOpenInput} color="secondary">
+                    Выбрать видео
+                </Button>
             ) : type === "image" ? (
                 <Button size="small" variant="contained" onClick={handleOpenInput} color="secondary">
                     Выбрать изображение

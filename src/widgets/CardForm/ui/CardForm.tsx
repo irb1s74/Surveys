@@ -67,37 +67,35 @@ export const CardForm: FC<CardFormProps> = (props) => {
                 </CardContent>
             </CardActionArea>
             <Divider/>
-            {authData.role === "HR" && (
-                <>
-                    <CardActions sx={{justifyContent: "flex-end"}}>
-                        <IconButton onClick={handleClick}>
-                            <IoEllipsisVerticalSharp/>
-                        </IconButton>
-                    </CardActions>
-                    <Menu
-                        anchorEl={anchorEl}
-                        id="cardForm-menu"
-                        open={open}
-                        onClose={handleClose}
-                        transformOrigin={{horizontal: 'center', vertical: 'top'}}
-                        anchorOrigin={{horizontal: 'center', vertical: 'bottom'}}
-                    >
-                        <MenuItem onClick={handleToResults}>
-                            <ListItemIcon>
-                                <IoPodium fontSize={22}/>
-                            </ListItemIcon>
-                            Результаты
-                        </MenuItem>
-                        <MenuItem onClick={handleDeleteForm}>
-                            <ListItemIcon>
-                                <IoTrash fontSize={22}/>
-                            </ListItemIcon>
-                            Удалить
-                        </MenuItem>
-                    </Menu>
-                </>
-            )}
 
+            <CardActions sx={{justifyContent: "flex-end"}}>
+                <IconButton onClick={handleClick}>
+                    <IoEllipsisVerticalSharp/>
+                </IconButton>
+            </CardActions>
+            <Menu
+                anchorEl={anchorEl}
+                id="cardForm-menu"
+                open={open}
+                onClose={handleClose}
+                transformOrigin={{horizontal: 'center', vertical: 'top'}}
+                anchorOrigin={{horizontal: 'center', vertical: 'bottom'}}
+            >
+                <MenuItem onClick={handleToResults}>
+                    <ListItemIcon>
+                        <IoPodium fontSize={22}/>
+                    </ListItemIcon>
+                    Результаты
+                </MenuItem>
+                {authData.role === "HR" && (
+                    <MenuItem onClick={handleDeleteForm}>
+                        <ListItemIcon>
+                            <IoTrash fontSize={22}/>
+                        </ListItemIcon>
+                        Удалить
+                    </MenuItem>
+                )}
+            </Menu>
         </Card>
     );
 };
