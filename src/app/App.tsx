@@ -3,7 +3,7 @@ import {Navbar} from "widgets/Navbar";
 import {AppRouter} from "app/providers/router";
 import {useDispatch} from "react-redux";
 import {authByToken} from "entities/User";
-import {PageLoader} from "widgets/PageLoader";
+import {PageLoader} from "shared/ui/PageLoader/PageLoader";
 
 const App = () => {
     const dispatch = useDispatch();

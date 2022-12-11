@@ -4,7 +4,7 @@ import LoginForm from "../LoginForm/LoginForm";
 
 
 
-const AuthForm = () => {
+const Auth = () => {
     const [typeAuthLogin, setTypeAuth] = useState(true)
     const handleSetTypeAuth = useCallback(() => {
         setTypeAuth(!typeAuthLogin)
@@ -18,4 +18,4 @@ const AuthForm = () => {
     )
 };
 
-export default AuthForm;
+export default Auth;

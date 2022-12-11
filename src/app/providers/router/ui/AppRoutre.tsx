@@ -1,7 +1,7 @@
 import {Suspense} from 'react';
 import {Route, Routes} from 'react-router-dom';
 import {routeConfig, routeConfigPrivate} from "shared/config/routerConfig/routerConfig";
-import {PageLoader} from "widgets/PageLoader";
+import {PageLoader} from "shared/ui/PageLoader/PageLoader";
 import {useSelector} from "react-redux";
 import {getUserAuthData} from "entities/User";
 

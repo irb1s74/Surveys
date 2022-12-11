@@ -67,7 +67,6 @@ export const CardForm: FC<CardFormProps> = (props) => {
                 </CardContent>
             </CardActionArea>
             <Divider/>
-
             <CardActions sx={{justifyContent: "flex-end"}}>
                 <IconButton onClick={handleClick}>
                     <IoEllipsisVerticalSharp/>

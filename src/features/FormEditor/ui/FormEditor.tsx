@@ -1,7 +1,7 @@
-import {FC, useCallback, useEffect} from 'react';
+import {FC, Fragment, useCallback, useEffect} from 'react';
 import {Button, Fab} from "@mui/material";
 import {IoImage, IoLogoYoutube, IoText, IoCheckbox} from "react-icons/io5";
-import {DialActions} from "widgets/DialActions";
+import {DialActions} from "shared/ui/DialActions/DialActions";
 import {DynamicModuleLoader, ReducersList} from "shared/lib/components/DynamicModuleLoader";
 import {getFormEditorFoundForm} from "../model/selectors/getFormEditorFoundForm/getFormEditorFoundForm";
 import {getFormEditorIsLoading} from "../model/selectors/getFormEditorIsLoading/getFormEditorIsLoading";
@@ -19,7 +19,7 @@ import {deleteVariant} from "features/FormEditor/model/service/deleteVariant";
 import {Form, getFormById, Questions, Variants} from "entities/Form";
 import {QuestionEditor} from 'widgets/QuestionEditor';
 import {IoEye} from "react-icons/io5";
-import {PageLoader} from "widgets/PageLoader";
+import {PageLoader} from "shared/ui/PageLoader/PageLoader";
 import {updateImageQuestion} from "features/FormEditor/model/service/updateImageQuestion";
 import {updateVideoQuestion} from "../model/service/updateVideoQuestion";
 import {publishForm} from "../model/service/publishForm";
@@ -131,7 +131,7 @@ const FormEditor: FC<EditFormProps> = ({}) => {
     return (
         <DynamicModuleLoader reducers={initialReducers}>
             {!isLoading ? (
-                <>
+                <Fragment>
                     {form.title &&
                         <FormEditorHeader
                             formData={form}
@@ -159,7 +159,7 @@ const FormEditor: FC<EditFormProps> = ({}) => {
                         </Fab>
                     </Link>
                     <DialActions actions={actions}/>
-                </>
+                </Fragment>
             ) : <PageLoader/>}
         </DynamicModuleLoader>
     );

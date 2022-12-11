@@ -13,8 +13,8 @@ import {Button, Card, CardHeader, Stack} from "@mui/material";
 import {Question} from "widgets/Question";
 import {DynamicModuleLoader, ReducersList} from "shared/lib/components/DynamicModuleLoader";
 import {createYupSchema} from "shared/lib/createValidation/createValidation";
+import {PageLoader} from "shared/ui/PageLoader/PageLoader";
 import * as yup from "yup";
-import {PageLoader} from "widgets/PageLoader";
 
 const initialReducers: ReducersList = {
     formReply: formReplyReducer

@@ -1,4 +1,4 @@
-import {FC, useEffect} from 'react';
+import {FC, Fragment, useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {Card, CardContent, CardMedia, IconButton, Stack, Typography} from "@mui/material";
 import {formResultsReducer} from "../model/slice/formResultsSlice";
@@ -10,14 +10,14 @@ import {
     getFormResultsIsLoading
 } from "../model/selectors/getFormResultsIsLoading/getFormResultsIsLoading";
 import {useParams} from "react-router-dom";
-import {PageLoader} from "widgets/PageLoader";
 import {IoDownload} from "react-icons/io5";
 import BarStats from "shared/ui/BarStats/BarStats";
 import PieStats from "shared/ui/PieStats/PieStats";
 import {replyToFormData} from "../lib/replyToStatsData";
 import {getUrl} from "shared/lib/getUrl/getUrl";
 import {downLoadResults} from "features/FormResults/model/service/downLoadResults";
-import {Player} from "widgets/Player";
+import {Player} from "shared/ui/Player";
+import {PageLoader} from "shared/ui/PageLoader/PageLoader";
 
 
 interface EditFormAnswersProps {
@@ -47,7 +47,6 @@ const FormResults: FC<EditFormAnswersProps> = ({}) => {
         }
     })
 
-
     useEffect(() => {
         dispatch(getFormById({formId: id, token: authData.token}));
     }, [id])
@@ -59,7 +58,7 @@ const FormResults: FC<EditFormAnswersProps> = ({}) => {
     return (
         <DynamicModuleLoader reducers={initialReducers}>
             {!isLoading ? (
-                <>
+                <Fragment>
                     <Card>
                         <CardContent>
                             <Stack direction="row" justifyContent="space-between" alignItems="center">
@@ -75,7 +74,6 @@ const FormResults: FC<EditFormAnswersProps> = ({}) => {
                     </Card>
                     {replyToFormData(reply, questions).map((statistic, index) => (
                         <Card key={index}>
-                            {/*<CardHeader title={statistic.title}/>*/}
                             <CardContent>
                                 <Stack sx={{width: "100%"}} direction="row" justifyContent="center" alignItems="center">
                                     {statistic.type === "checkbox" ? (
@@ -88,7 +86,7 @@ const FormResults: FC<EditFormAnswersProps> = ({}) => {
                                             <CardMedia
                                                 component="img"
                                                 height="400"
-                                                image={`${getUrl}questions/${statistic.title}`}
+                                                image={`${getUrl}questions/images/${statistic.title}`}
                                                 sx={{mb: '20px'}}
                                             />
                                             <BarStats data={statistic.data}/>
@@ -97,7 +95,7 @@ const FormResults: FC<EditFormAnswersProps> = ({}) => {
                                         <Stack direction="column" spacing={2} alignItems="center">
                                             {statistic.title && (
                                                 <Player
-                                                    src={`http://localhost:5000/questions/stream/${statistic.title}`}
+                                                    src={`${getUrl}questions/stream/${statistic.title}`}
                                                 />
                                             )}
                                             <BarStats data={statistic.data}/>
@@ -112,7 +110,7 @@ const FormResults: FC<EditFormAnswersProps> = ({}) => {
                             </CardContent>
                         </Card>
                     ))}
-                </>
+                </Fragment>
             ) : (<PageLoader/>)}
         </DynamicModuleLoader>
     );

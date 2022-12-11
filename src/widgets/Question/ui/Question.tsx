@@ -9,7 +9,7 @@ import {
 import {Questions} from "entities/Form";
 import Variant from "shared/ui/Variant/Variant";
 import {getUrl} from "shared/lib/getUrl/getUrl";
-import {Player} from "widgets/Player";
+import {Player} from "shared/ui/Player";
 
 
 interface QuestionEditorProps {
@@ -73,7 +73,7 @@ const Question = ({
                             <CardMedia
                                 component="img"
                                 height="400"
-                                image={`${getUrl}questions/${data.title}`}
+                                image={`${getUrl}questions/images/${data.title}`}
                                 alt={`${data.id}`}
                                 sx={{mb: '20px'}}
                             />
@@ -93,7 +93,7 @@ const Question = ({
                         )}
                         {data.title && (
                             <Player
-                                src={`http://localhost:5000/questions/stream/${data.title}`}
+                                src={`${getUrl}questions/stream/${data.title}`}
                             />
                         )}
                         <TextField

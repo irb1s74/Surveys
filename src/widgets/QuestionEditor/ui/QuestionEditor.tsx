@@ -16,7 +16,7 @@ import {Questions, Variants} from "entities/Form";
 import Variant from "shared/ui/Variant/Variant";
 import useDebounce from "shared/lib/useDebounce/useDebounce";
 import {getUrl} from "shared/lib/getUrl/getUrl";
-import {Player} from "widgets/Player";
+import {Player} from "shared/ui/Player";
 
 
 interface QuestionEditorProps {
@@ -41,7 +41,7 @@ const QuestionEditor = ({
     onUpdateVariant
 }: QuestionEditorProps) => {
     const [question, setQuestion] = useState(data);
-    const [questionImage, setQuestionImage] = useState(data.title && `${getUrl}questions/${data.title}`);
+    const [questionImage, setQuestionImage] = useState(data.title && `${getUrl}questions/images/${data.title}`);
     const fileImageRef = useRef(document.createElement("input")) as MutableRefObject<HTMLInputElement>;
     const debouncedValue = useDebounce(question, 650)
     const isChanged = useRef(false);
@@ -67,7 +67,6 @@ const QuestionEditor = ({
         setQuestion({...question, required: event.target.checked});
     }
 
-
     const handleOpenInput = () => {
         fileImageRef.current.click();
     }
@@ -84,7 +83,6 @@ const QuestionEditor = ({
     }
     const handleChangeVideo = () => {
         if (fileImageRef.current.files) {
-            setQuestionImage(URL.createObjectURL(fileImageRef.current.files[0]))
             onUpdateVideo({questionId: `${question.id}`, files: fileImageRef.current.files})
         }
     }
@@ -124,7 +122,6 @@ const QuestionEditor = ({
                             />
                             <TextField label="Ответ" fullWidth disabled/>
                         </Fragment>
-
                     ) : question.type === "image" ? (
                         <Stack direction="column" sx={{width: "100%"}} spacing={1} alignItems="center">
                             <QuestionEditorHeader
@@ -162,7 +159,7 @@ const QuestionEditor = ({
                             />
                             {question.title && (
                                 <Player
-                                    src={`http://localhost:5000/questions/stream/${question.title}`}
+                                    src={`${getUrl}questions/stream/${question.title}`}
                                 />
                             )}
                             <input

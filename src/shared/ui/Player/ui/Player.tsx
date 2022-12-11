@@ -13,7 +13,7 @@ interface PlayerProps {
 
 export const Player: FC<PlayerProps> = ({src}) => {
     return (
-        <ReactPlayer poster="/assets/poster.png">
+        <ReactPlayer poster="https://www.parma.ru/img/Logo-2-31.svg">
             <source src={src}/>
             <ControlBar>
                 <TimeDivider order={4.2}/>
