@@ -55,12 +55,12 @@ const QuestionEditor = ({
     const handleSetType = useCallback((type: string) => {
         isChanged.current = true;
         setQuestion({...question, type: type});
-    }, [])
+    }, [question])
 
     const handleSetTitle = useCallback((title: string) => {
         isChanged.current = true;
         setQuestion({...question, title: title});
-    }, [])
+    }, [question])
 
     const handleSetRequired = (event: ChangeEvent<HTMLInputElement>) => {
         isChanged.current = true;
